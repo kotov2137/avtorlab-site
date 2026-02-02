@@ -101,7 +101,7 @@ const COPY = {
         { title: "Тотальне протезування", desc: "Повні дуги, реабілітації, протоколи під імплантацію.", img: "" },
         { title: "Титанові балки", desc: "Індивідуальні конструкції, точне фрезерування, контроль пасивності.", img: "" },
         { title: "Оклюзійні капи", desc: "Захист, стабілізація, контроль висоти та комфорту.", img: "" },
-        { title: "Фрезерний центр", desc: "Фрезерування STL/Exocad: цирконій, PMMA, титан (за ТЗ).", img: "" },
+        { title: "Фрезерний центр", desc: "Фрезерування STL/Exocad: цирконій, PMMA.", img: "" },
       ],
     },
     partners: {
@@ -181,6 +181,7 @@ const COPY = {
     contact: {
       title: "Контакти",
       subtitle: "Напишіть нам — підкажемо протокол, прорахуємо вартість та терміни.",
+        address: "проспект Науки, 40 Ж, Дніпро, Дніпропетровська область",
       formTitle: "Запит / прорахунок",
       name: "Ім’я",
       clinic: "Клініка/Лабораторія",
@@ -247,7 +248,7 @@ const COPY = {
         { title: "Тотальное протезирование", desc: "Полные дуги, реабилитации, протоколы под имплантацию.", img: "" },
         { title: "Титановые балки", desc: "Индивидуальные конструкции, точная фрезеровка, контроль пассивности.", img: "" },
         { title: "Окклюзионные капы", desc: "Защита, стабилизация, комфорт.", img: "" },
-        { title: "Услуги фрезерного центра", desc: "Фрезеровка STL/Exocad: цирконий, PMMA, титан (по ТЗ).", img: "" },
+        { title: "Услуги фрезерного центра", desc: "Фрезеровка STL/Exocad: цирконий, PMMA.", img: "" },
       ],
     },
     partners: {
@@ -323,6 +324,7 @@ const COPY = {
     contact: {
       title: "Контакты",
       subtitle: "Напишите нам — поможем с протоколом и сроками.",
+        address: "проспект Науки 40Ж, Днепр, Днепропетровская область",
       formTitle: "Запрос / расчет",
       name: "Имя",
       clinic: "Клиника/Лаборатория",
@@ -389,7 +391,7 @@ const COPY = {
         { title: "Full-arch restorations", desc: "Rehabilitations and implant protocols.", img: "" },
         { title: "Titanium bars", desc: "Custom structures, precise milling, passive fit control.", img: "" },
         { title: "Occlusal splints", desc: "Protection, stabilization, comfort.", img: "" },
-        { title: "Milling center services", desc: "STL/Exocad milling: zirconia, PMMA, titanium (per spec).", img: "" },
+        { title: "Milling center services", desc: "STL/Exocad milling: zirconia, PMMA.", img: "" },
       ],
     },
     partners: {
@@ -464,6 +466,7 @@ const COPY = {
     contact: {
       title: "Contact",
       subtitle: "Send us a message — we’ll help with protocol and timing.",
+        address: "Nauky Ave 40Ж, Dnipro, Dnipropetrvoska Oblast'",
       formTitle: "Request / estimate",
       name: "Name",
       clinic: "Clinic/Lab",
@@ -690,7 +693,7 @@ function Hero({ t }) {
                 </div>
                 <div className="mt-2 flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
-                  <span>Dnipro, Ukraine</span>
+                  <span>{t.contact.address}</span>
                 </div>
               </CardContent>
             </Card>
@@ -728,14 +731,34 @@ function Services({ t }) {
 </a>
 </motion.div>
 
-{/* Extra service photos */}
+
+{/* Gallery: all service photos */}
 <div className="grid gap-3 sm:grid-cols-3 mb-8">
-  {["/images/services-teeth-2.jpg","/images/services-teeth-3.jpg","/images/services-teeth-4.jpg"].map((src) => (
-    <div key={src} className="relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 aspect-[16/10]">
-      <Image src={src} alt="Service photo" fill className="object-cover" sizes="(max-width: 640px) 100vw, 360px" />
+  {[
+    "/images/services-teeth-2.jpg",
+    "/images/services-teeth-3.jpg",
+    "/images/services-teeth-4.jpg",
+    "/images/services-teeth-5.jpg",
+    "/images/services-teeth-6.jpg",
+    "/images/services-teeth-7.jpg",
+    "/images/services-teeth-8.jpg",
+    "/images/services-teeth-9.jpg",
+    "/images/services-teeth-10.jpg",
+    "/images/services-teeth-11.jpg",
+    "/images/services-teeth-12.jpg",
+    "/images/services-teeth-13.jpg",
+  ].map((src) => (
+    <div key={src} className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+      <img
+        src={src}
+        alt="Avtor Lab — services"
+        className="h-56 w-full object-cover"
+        loading="lazy"
+      />
     </div>
   ))}
 </div>
+
 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {t.services.items.map((it) => (
           <Card key={it.title} className={PANEL}>
@@ -968,7 +991,7 @@ function Contact({ t }) {
     };
   }, []);
 
-  const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent("Dnipro, Ukraine")}`;
+  const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(t.contact.address)}`;
 
   return (
     <Section id="contact" title={t.contact.title} subtitle={t.contact.subtitle}>
@@ -990,7 +1013,7 @@ function Contact({ t }) {
                 />
               ) : (
                 <div className="p-4 text-sm text-neutral-700">
-                  {t.contact.mapOffline} <b>Dnipro, Ukraine</b>
+                  {t.contact.mapOffline} <b>{t.contact.address}</b>
                   <div className="mt-3">
                     <Button asChild className="bg-black text-white hover:bg-neutral-900">
                       <a href={mapUrl} target="_blank" rel="noopener noreferrer">
