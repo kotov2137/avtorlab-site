@@ -101,7 +101,7 @@ const COPY = {
         { title: "Тотальне протезування", desc: "Повні дуги, реабілітації, протоколи під імплантацію.", img: "" },
         { title: "Титанові балки", desc: "Індивідуальні конструкції, точне фрезерування, контроль пасивності.", img: "" },
         { title: "Оклюзійні капи", desc: "Захист, стабілізація, контроль висоти та комфорту.", img: "" },
-        { title: "Фрезерний центр", desc: "Фрезерування STL/Exocad: цирконій, PMMA.", img: "" },
+        { title: "Фрезерний центр", desc: "Фрезерування STL/Exocad: цирконій, PMMA, титан.", img: "" },
       ],
     },
     partners: {
@@ -248,7 +248,7 @@ const COPY = {
         { title: "Тотальное протезирование", desc: "Полные дуги, реабилитации, протоколы под имплантацию.", img: "" },
         { title: "Титановые балки", desc: "Индивидуальные конструкции, точная фрезеровка, контроль пассивности.", img: "" },
         { title: "Окклюзионные капы", desc: "Защита, стабилизация, комфорт.", img: "" },
-        { title: "Услуги фрезерного центра", desc: "Фрезеровка STL/Exocad: цирконий, PMMA.", img: "" },
+        { title: "Услуги фрезерного центра", desc: "Фрезеровка STL/Exocad: цирконий, PMMA, титан.", img: "" },
       ],
     },
     partners: {
@@ -391,7 +391,7 @@ const COPY = {
         { title: "Full-arch restorations", desc: "Rehabilitations and implant protocols.", img: "" },
         { title: "Titanium bars", desc: "Custom structures, precise milling, passive fit control.", img: "" },
         { title: "Occlusal splints", desc: "Protection, stabilization, comfort.", img: "" },
-        { title: "Milling center services", desc: "STL/Exocad milling: zirconia, PMMA.", img: "" },
+        { title: "Milling center services", desc: "STL/Exocad milling: zirconia, PMMA, titanium.", img: "" },
       ],
     },
     partners: {
