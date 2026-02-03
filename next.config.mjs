@@ -1,12 +1,15 @@
 import { fileURLToPath } from "url";
 import path from "path";
 
+/** ESM-safe __dirname */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Helps Next.js pick the correct workspace root when you have another
-  // package-lock.json in parent folders.
+  reactStrictMode: true,
+
+  // Убирает проблему с workspace root и Turbopack
   turbopack: {
     root: __dirname,
   },
