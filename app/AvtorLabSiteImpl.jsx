@@ -37,7 +37,7 @@ const SOCIALS = [
 
 const LANGS = [
   { key: "uk", label: "UA" },
-  { key: "ru", label: "RU" },
+  { key: "pl", label: "PL" },
   { key: "en", label: "EN" },
 ];
 
@@ -101,7 +101,7 @@ const COPY = {
         { title: "Тотальне протезування", desc: "Повні дуги, реабілітації, протоколи під імплантацію.", img: "" },
         { title: "Титанові балки", desc: "Індивідуальні конструкції, точне фрезерування, контроль пасивності.", img: "" },
         { title: "Оклюзійні капи", desc: "Захист, стабілізація, контроль висоти та комфорту.", img: "" },
-        { title: "Фрезерний центр", desc: "Фрезерування STL/Exocad: цирконій, PMMA, титан.", img: "" },
+        { title: "Фрезерний центр", desc: "Фрезерування STL/Exocad: цирконій, PMMA, титан (за ТЗ).", img: "" },
       ],
     },
     partners: {
@@ -181,7 +181,6 @@ const COPY = {
     contact: {
       title: "Контакти",
       subtitle: "Напишіть нам — підкажемо протокол, прорахуємо вартість та терміни.",
-        address: "проспект Науки, 40 Ж, Дніпро, Дніпропетровська область",
       formTitle: "Запит / прорахунок",
       name: "Ім’я",
       clinic: "Клініка/Лабораторія",
@@ -207,147 +206,144 @@ const COPY = {
       button: "Надіслати запит",
     },
   },
-
-  ru: {
+  pl: {
     brand: "Avtor Lab",
     topbar: {
-      tagline: "Премиум реставрации",
-      call: "Позвонить",
-      email: "Написать",
+      tagline: "Premium rekonstrukcje",
+      call: "Zadzwoń",
+      email: "Napisz",
     },
     nav: {
-      services: "Услуги",
-      partners: "Партнёрам",
-      education: "Обучение",
-      calculator: "Калькулятор",
+      services: "Usługi",
+      partners: "Dla partnerów",
+      education: "Szkolenia",
+      calculator: "Kalkulator",
       faq: "FAQ",
-      about: "О нас",
-      blog: "Блог",
-      contact: "Контакты",
+      about: "O nas",
+      blog: "Blog",
+      contact: "Kontakt",
     },
     hero: {
-      title: "Премиум реставрации и точная фрезеровка",
+      title: "Premium rekonstrukcje i precyzyjne frezowanie",
       subtitle:
-        "Создаем эстетичные и функциональные решения: от винира до полных дуг. Работаем с клиниками и лабораториями по всей Украине.",
-      ctaPrimary: "Отправить запрос",
-      ctaSecondary: "Смотреть услуги",
-      badges: ["Стабильные сроки", "Контроль качества", "Поддержка врача", "100% цифровые протоколы"],
-      qcLine: "QC • Цифровой протокол",
+        "Tworzymy estetyczne i funkcjonalne rozwiązania: od licówek po pełne łuki. Współpracujemy z klinikami i laboratoriami na terenie Ukrainy.",
+      ctaPrimary: "Wyślij zapytanie",
+      ctaSecondary: "Zobacz usługi",
+      badges: ["Stabilne terminy", "Kontrola jakości", "Wsparcie lekarza", "100% cyfrowy protokół"],
+      qcLine: "QC • Cyfrowy protokół",
     },
     workflow: {
-      title: "Процесс работы",
-      items: ["Сканирование / оттиски", "Дизайн / согласование", "Фрезеровка / контроль качества", "Доставка / поддержка"],
+      title: "Proces pracy",
+      items: ["Skan / wyciski", "Projekt / akceptacja", "Frezowanie / kontrola jakości", "Dostawa / wsparcie"],
     },
-    contactBlockTitle: "Контакты",
+    contactBlockTitle: "Kontakt",
     services: {
-      title: "Услуги",
-      subtitle: "Цифровой и классический протокол.",
+      title: "Usługi",
+      subtitle: "Pracujemy w protokole cyfrowym i klasycznym. Dobieramy materiały do zadania i budżetu.",
       items: [
-        { title: "Виниры и накладки", desc: "Эстетика, натуральная анатомия, контроль цвета и прозрачности.", img: "" },
-        { title: "Циркониевые коронки", desc: "Прочность, точная посадка, стабильная окклюзия.", img: "" },
-        { title: "Тотальное протезирование", desc: "Полные дуги, реабилитации, протоколы под имплантацию.", img: "" },
-        { title: "Титановые балки", desc: "Индивидуальные конструкции, точная фрезеровка, контроль пассивности.", img: "" },
-        { title: "Окклюзионные капы", desc: "Защита, стабилизация, комфорт.", img: "" },
-        { title: "Услуги фрезерного центра", desc: "Фрезеровка STL/Exocad: цирконий, PMMA, титан.", img: "" },
+        { title: "Licówki i onlaye", desc: "Estetyka, naturalna anatomia, kontrola koloru i przezierności.", img: "" },
+        { title: "Korony cyrkonowe", desc: "Wytrzymałość, precyzyjne dopasowanie, stabilna okluzja.", img: "" },
+        { title: "Rehabilitacje pełnołukowe", desc: "Pełne łuki, rehabilitacje, protokoły pod implanty.", img: "" },
+        { title: "Belki tytanowe", desc: "Konstrukcje indywidualne, precyzyjne frezowanie, kontrola pasywności.", img: "" },
+        { title: "Szyny okluzyjne", desc: "Ochrona, stabilizacja, kontrola wysokości i komfortu.", img: "" },
+        { title: "Centrum frezowania", desc: "Frezowanie STL/Exocad: cyrkon, PMMA, tytan (wg specyfikacji).", img: "" },
       ],
     },
     partners: {
-      title: "Партнёрам",
-      subtitle: "Прозрачные условия, коммуникация, контроль качества.",
+      title: "Dla partnerów",
+      subtitle: "Dołączamy kliniki i laboratoria: jasne warunki, komunikacja i kontrola jakości.",
       bullets: [
-        "Персональный менеджер и быстрый ответ",
-        "Стабильные сроки и трекинг этапов",
-        "Технические рекомендации и поддержка врача",
-        "Файлы/сканы: Exocad, 3Shape, STL",
+        "Osobisty opiekun i szybka informacja zwrotna",
+        "Stabilne terminy i śledzenie etapów",
+        "Rekomendacje techniczne i wsparcie lekarza",
+        "Pliki/skany: Exocad, 3Shape, STL",
       ],
-      cta: "Получить прайс и условия",
-      
+      cta: "Poproś o cennik i warunki",
 
-      qcTitle: "Контроль качества на каждом этапе",
-      qcItems: ["Посадка и прилегание", "Окклюзия и контакты", "Толщина и границы", "Финишная обработка"],
+      qcTitle: "Kontrola jakości na każdym etapie",
+      qcItems: ["Dopasowanie i brzegi", "Okluzja i kontakty", "Grubość i granice", "Wykończenie"],
     },
     education: {
-      title: "Обучение и поддержка",
-      subtitle: "Протоколы, разбор кейсов, помощь с цифровым потоком.",
+      title: "Szkolenia i wsparcie",
+      subtitle: "Dzielimy się protokołami, omawiamy trudne przypadki, pomagamy w cyfrowym workflow.",
       cards: [
-        { title: "Мини-лекции для врачей", desc: "Материалы, преп, цементация, коммуникация лаборатория–клиника." },
-        { title: "Цифровые воркфлоу", desc: "Скан, дизайн, техтребования, посадка и окклюзия." },
-        { title: "Сопровождение сложных кейсов", desc: "Планирование, эстетика, временные решения, прототипирование." },
+        { title: "Mini-wykłady dla lekarzy", desc: "Materiały, preparacja, cementowanie, komunikacja laboratorium–klinika." },
+        { title: "Cyfrowe workflow", desc: "Skan, projekt, wymagania techniczne, kontrola dopasowania i okluzji." },
+        { title: "Wsparcie trudnych przypadków", desc: "Planowanie, kontrola estetyki, tymczasówki, prototypowanie." },
       ],
-      cta: "Записаться на консультацию",
+      cta: "Umów konsultację",
       link: "https://t.me/avtor_lab",
     },
     calculator: {
-      title: "Калькулятор сроков",
-      subtitle: "Оцените ориентировочный срок изготовления (без логистики).",
-      label: "Тип работы",
+      title: "Kalkulator terminów",
+      subtitle: "Oszacuj orientacyjny czas wykonania (bez logistyki).",
+      label: "Rodzaj pracy",
       types: [
-        { key: "veneer", label: "Винир/накладка", days: 5 },
-        { key: "zirconia", label: "Циркониевая коронка", days: 7 },
-        { key: "fullarch", label: "Полная дуга", days: 14 },
-        { key: "bar", label: "Титановая балка", days: 10 },
-        { key: "splint", label: "Окклюзионная капа", days: 4 },
-        { key: "b2b", label: "Фрезерный центр", days: 3 },
+        { key: "veneer", label: "Licówka/onlay", days: 5 },
+        { key: "zirconia", label: "Korona cyrkonowa", days: 7 },
+        { key: "fullarch", label: "Pełny łuk", days: 14 },
+        { key: "bar", label: "Belka tytanowa", days: 10 },
+        { key: "splint", label: "Szyna okluzyjna", days: 4 },
+        { key: "b2b", label: "Centrum frezowania", days: 3 },
       ],
-      rush: "Срочно (ускоренно)",
-      result: "Ориентировочно:",
-      days: "дней",
+      rush: "Pilne (przyspieszone)",
+      result: "Orientacyjnie:",
+      days: "dni",
     },
     faq: {
       title: "FAQ",
-      subtitle: "Ответы на частые вопросы.",
+      subtitle: "Odpowiedzi na najczęstsze pytania.",
       items: [
-        { q: "Какие форматы файлов вы принимаете?", a: "STL, PLY (по договоренности), проекты Exocad. Лучше всего — STL с корректными границами и окклюзией." },
-        { q: "Работаете ли вы с доставкой по Украине?", a: "Да, отправляем НП/курьером. Логистику согласовываем отдельно." },
-        { q: "Можно ли получить примерку/прототип?", a: "Да, в зависимости от кейса можем сделать прототип/примерку." },
+        { q: "Jakie formaty plików przyjmujecie?", a: "STL, PLY (po uzgodnieniu), projekty Exocad. Najlepiej — STL z poprawnymi granicami i okluzją." },
+        { q: "Czy realizujecie dostawy na terenie Ukrainy?", a: "Tak — wysyłka kurierem/Nową Pocztą. Logistykę ustalamy osobno." },
+        { q: "Czy można wykonać przymiarkę/prototyp?", a: "Tak, zależnie od przypadku możemy przygotować prototyp lub przymiarkę." },
       ],
     },
     about: {
-      title: "О Avtor Lab",
-      subtitle: "Эстетика, точность и контроль качества на каждом этапе.",
+      title: "O Avtor Lab",
+      subtitle: "Łączymy estetykę, precyzję i kontrolę jakości na każdym etapie.",
       stats: [
-        { k: "20+ лет", v: "стаж работы" },
-        { k: "100%", v: "цифровые протоколы" },
-        { k: "Контроль", v: "качества на каждом этапе" },
-        { k: "Фрезерный центр", v: "услуги и поддержка" },
+        { k: "20+ lat", v: "doświadczenia" },
+        { k: "100%", v: "cyfrowe protokoły" },
+        { k: "Kontrola", v: "jakości na każdym etapie" },
+        { k: "Centrum frezowania", v: "usługi i wsparcie" },
       ],
     },
     blog: {
-      title: "Блог",
-      subtitle: "Заметки о материалах и протоколах.",
+      title: "Blog",
+      subtitle: "Krótkie notatki o materiałach, protokołach i komunikacji laboratorium–klinika.",
       posts: [
-        { title: "Как подготовить STL для фрезеровки", desc: "Границы, окклюзия, толщина, экспорт и проверка.", tag: "Digital" },
-        { title: "Цирконий: прочность vs эстетика", desc: "Когда выбирать многослойный цирконий, а когда — облицовку.", tag: "Materials" },
-        { title: "Полная дуга: коммуникация", desc: "Данные, фото, прикус, вертикаль, временные — чтобы уменьшить переделки.", tag: "Workflow" },
+        { title: "Jak przygotować STL do frezowania", desc: "Granice, okluzja, grubość, eksport i weryfikacja — bez zbędnych poprawek.", tag: "Digital" },
+        { title: "Cyrkon: wytrzymałość vs estetyka", desc: "Kiedy wybrać cyrkon wielowarstwowy, a kiedy licowanie.", tag: "Materials" },
+        { title: "Pełny łuk: co jest kluczowe w komunikacji", desc: "Dane, zdjęcia, zwarcie, wysokość, tymczasówki — żeby ograniczyć poprawki.", tag: "Workflow" },
       ],
     },
     contact: {
-      title: "Контакты",
-      subtitle: "Напишите нам — поможем с протоколом и сроками.",
-        address: "проспект Науки 40Ж, Днепр, Днепропетровская область",
-      formTitle: "Запрос / расчет",
-      name: "Имя",
-      clinic: "Клиника/Лаборатория",
-      phone: "Телефон",
+      title: "Kontakt",
+      subtitle: "Napisz do nas — podpowiemy protokół, wycenimy i podamy terminy.",
+      formTitle: "Zapytanie / wycena",
+      name: "Imię",
+      clinic: "Klinika/Laboratorium",
+      phone: "Telefon",
       email: "Email",
-      message: "Описание кейса",
-      attach: "Прикрепить файлы (STL/фото)",
-      consent: "Согласен(на) на обработку персональных данных",
-      send: "Отправить",
-      sent: "Спасибо! Запрос отправлен.",
-      map: "Мы на карте",
-      mapOffline: "Карта недоступна офлайн. Адрес:",
-      openMap: "Открыть в Google Maps",
+      message: "Opis przypadku",
+      attach: "Dołącz pliki (STL/zdjęcia)",
+      consent: "Wyrażam zgodę na przetwarzanie danych osobowych",
+      send: "Wyślij",
+      sent: "Dziękujemy! Zapytanie zostało wysłane.",
+      map: "Mapa",
+      mapOffline: "Mapa jest niedostępna offline. Adres:",
+      openMap: "Otwórz w Google Maps",
     },
     footer: {
-      rights: "© Avtor Lab. Все права защищены.",
-      policy: "Политика конфиденциальности",
-      terms: "Условия",
+      rights: "© Avtor Lab. Wszelkie prawa zastrzeżone.",
+      policy: "Polityka prywatności",
+      terms: "Warunki",
     },
     cta: {
-      title: "Готовы начать?",
-      subtitle: "Отправьте запрос — мы свяжемся.",
-      button: "Отправить запрос",
+      title: "Gotowi zacząć?",
+      subtitle: "Wyślij zapytanie — skontaktujemy się.",
+      button: "Wyślij zapytanie",
     },
   },
 
@@ -391,7 +387,7 @@ const COPY = {
         { title: "Full-arch restorations", desc: "Rehabilitations and implant protocols.", img: "" },
         { title: "Titanium bars", desc: "Custom structures, precise milling, passive fit control.", img: "" },
         { title: "Occlusal splints", desc: "Protection, stabilization, comfort.", img: "" },
-        { title: "Milling center services", desc: "STL/Exocad milling: zirconia, PMMA, titanium.", img: "" },
+        { title: "Milling center services", desc: "STL/Exocad milling: zirconia, PMMA, titanium (per spec).", img: "" },
       ],
     },
     partners: {
@@ -466,7 +462,6 @@ const COPY = {
     contact: {
       title: "Contact",
       subtitle: "Send us a message — we’ll help with protocol and timing.",
-        address: "Nauky Ave 40Ж, Dnipro, Dnipropetrvoska Oblast'",
       formTitle: "Request / estimate",
       name: "Name",
       clinic: "Clinic/Lab",
@@ -693,7 +688,7 @@ function Hero({ t }) {
                 </div>
                 <div className="mt-2 flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
-                  <span>{t.contact.address}</span>
+                  <span>Dnipro, Ukraine</span>
                 </div>
               </CardContent>
             </Card>
@@ -705,6 +700,23 @@ function Hero({ t }) {
 }
 
 function Services({ t }) {
+  const gallery = useMemo(
+    () => [
+      "/images/services-teeth-2.jpg",
+      "/images/services-teeth-3.jpg",
+      "/images/services-teeth-4.jpg",
+      "/images/services-teeth-5.jpg",
+      "/images/services-teeth-6.jpg",
+      "/images/services-teeth-7.jpg",
+      "/images/services-teeth-8.jpg",
+      "/images/services-teeth-9.jpg",
+      "/images/services-teeth-10.jpg",
+      "/images/services-teeth-11.jpg",
+      "/images/services-teeth-12.jpg",
+      "/images/services-teeth-13.jpg",
+    ],
+    []
+  );
   return (
     <Section id="services" title={t.services.title} subtitle={t.services.subtitle}>
       
@@ -714,7 +726,7 @@ function Services({ t }) {
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true, amount: 0.3 }}
   transition={{ duration: 0.5, ease: "easeOut" }}
-  className="mt-6 mb-8"
+  className="mt-6 mb-4"
 >
   <a href={SOCIALS.find((s) => s.label === "Facebook")?.href} target="_blank" rel="noopener noreferrer" className="block">
     <div className="relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 aspect-[16/6]">
@@ -731,32 +743,26 @@ function Services({ t }) {
 </a>
 </motion.div>
 
-
-{/* Gallery: all service photos */}
-<div className="grid gap-3 sm:grid-cols-3 mb-8">
-  {[
-    "/images/services-teeth-2.jpg",
-    "/images/services-teeth-3.jpg",
-    "/images/services-teeth-4.jpg",
-    "/images/services-teeth-5.jpg",
-    "/images/services-teeth-6.jpg",
-    "/images/services-teeth-7.jpg",
-    "/images/services-teeth-8.jpg",
-    "/images/services-teeth-9.jpg",
-    "/images/services-teeth-10.jpg",
-    "/images/services-teeth-11.jpg",
-    "/images/services-teeth-12.jpg",
-    "/images/services-teeth-13.jpg",
-  ].map((src) => (
-    <div key={src} className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-      <img
-        src={src}
-        alt="Avtor Lab — services"
-        className="h-56 w-full object-cover"
-        loading="lazy"
-      />
-    </div>
-  ))}
+{/* Extra service photos (grid 3 columns) */}
+<div className="mb-8">
+  <div className="mt-1 grid grid-cols-2 gap-3 md:grid-cols-3">
+    {gallery.map((src) => (
+      <div
+        key={src}
+        className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100"
+      >
+        <div className="relative aspect-[4/3]">
+          <Image
+            src={src}
+            alt="Przykładowe prace protetyczne"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 320px"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
 </div>
 
 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -991,7 +997,7 @@ function Contact({ t }) {
     };
   }, []);
 
-  const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(t.contact.address)}`;
+  const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent("Dnipro, Ukraine")}`;
 
   return (
     <Section id="contact" title={t.contact.title} subtitle={t.contact.subtitle}>
@@ -1013,7 +1019,7 @@ function Contact({ t }) {
                 />
               ) : (
                 <div className="p-4 text-sm text-neutral-700">
-                  {t.contact.mapOffline} <b>{t.contact.address}</b>
+                  {t.contact.mapOffline} <b>Dnipro, Ukraine</b>
                   <div className="mt-3">
                     <Button asChild className="bg-black text-white hover:bg-neutral-900">
                       <a href={mapUrl} target="_blank" rel="noopener noreferrer">
@@ -1062,19 +1068,15 @@ function Contact({ t }) {
   );
 }
 
-function Footer({ t }) {
+function Footer({ t, lang }) {
   return (
     <footer className={`border-t ${PAGE_BORDER} py-10 bg-black`}>
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="text-sm text-neutral-400">{t.footer.rights}</div>
           <div className="flex gap-4 text-sm">
-            <button type="button" className="text-neutral-300 hover:text-white">
-              {t.footer.policy}
-            </button>
-            <button type="button" className="text-neutral-300 hover:text-white">
-              {t.footer.terms}
-            </button>
+            <a href={`/privacy${lang === "uk" ? "" : `#${lang}`}`} className="text-neutral-300 hover:text-white">{t.footer.policy}</a>
+            <a href={`/terms${lang === "uk" ? "" : `#${lang}`}`} className="text-neutral-300 hover:text-white">{t.footer.terms}</a>
           </div>
         </div>
       </div>
@@ -1110,6 +1112,27 @@ export default function AvtorLabSite() {
   const [lang, setLang] = useState("uk");
   const t = COPY[lang] || COPY.uk;
 
+  // Hash routing: allows /#pl to open Polish version.
+  useEffect(() => {
+    const applyFromHash = () => {
+      const h = (window.location.hash || "").replace("#", "").trim();
+      if (h === "pl" || h === "en" || h === "uk") setLang(h);
+    };
+    applyFromHash();
+    window.addEventListener("hashchange", applyFromHash);
+    return () => window.removeEventListener("hashchange", applyFromHash);
+  }, []);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (lang === "uk") {
+      url.hash = "";
+    } else {
+      url.hash = lang;
+    }
+    window.history.replaceState(null, "", url.toString());
+  }, [lang]);
+
   return (
     <div className={`min-h-screen ${PAGE_BG}`}>
       <Topbar t={t} lang={lang} setLang={setLang} />
@@ -1124,7 +1147,7 @@ export default function AvtorLabSite() {
         <Blog t={t} />
         <Contact t={t} />
       </main>
-      <Footer t={t} />
+      <Footer t={t} lang={lang} />
       <StickyCTA t={t} />
     </div>
   );
