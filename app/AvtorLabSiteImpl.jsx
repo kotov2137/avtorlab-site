@@ -27,8 +27,10 @@ const PHONE_DISPLAY = "+38 (073) 000-66-99";
 const PHONE_TEL = "+380730006699";
 const EMAIL = "avtorlab1@gmail.com";
 const TG_LAB = "https://t.me/avtor_lab";
+const GOOGLE_MAPS_PROFILE = "https://www.google.com/maps/place/AvtorLab/@48.4391202,35.0460747,784m/data=!3m2!1e3!4b1!4m6!3m5!1s0x40dbe3874afea53b:0x56bc64e017adf841!8m2!3d48.4391202!4d35.048655!16s%2Fg%2F11yxg0n21y?entry=ttu&g_ep=EgoyMDI2MDMyMy4xIKXMDSoASAFQAw%3D%3D";
 
 const SOCIALS = [
+  { label: "Google Maps", href: GOOGLE_MAPS_PROFILE, icon: MapPin },
   { label: "Instagram", href: "https://www.instagram.com/yevhen_bitsenko/", icon: Globe },
   { label: "Facebook", href: "https://www.facebook.com/evgeniy.pavlovich.1", icon: Globe },
   // поменяй USERNAME на реальный ник
@@ -37,6 +39,7 @@ const SOCIALS = [
 
 const LANGS = [
   { key: "uk", label: "UA" },
+  { key: "ru", label: "RU" },
   { key: "pl", label: "PL" },
   { key: "en", label: "EN" },
 ];
@@ -63,7 +66,7 @@ const COPY = {
   uk: {
     brand: "Avtor Lab",
     topbar: {
-      tagline: "Преміум реставрації",
+      tagline: "Зуботехнічна лабораторія в Дніпрі",
       call: "Подзвонити",
       email: "Написати",
     },
@@ -78,9 +81,9 @@ const COPY = {
       contact: "Контакти",
     },
     hero: {
-      title: "Преміум реставрації та точне фрезерування",
+      title: "Зуботехнічна лабораторія Авторлаб",
       subtitle:
-        "Створюємо естетичні та функціональні рішення: від вініру до повних дуг. Приймаємо замовлення від клінік і лабораторій по всій Україні.",
+        "Avtorlab — зуботехнічна лабораторія в Дніпрі. Виготовляємо естетичні та функціональні реставрації: від вінірів до повних дуг для клінік і лабораторій по всій Україні.",
       ctaPrimary: "Надіслати запит",
       ctaSecondary: "Дивитися послуги",
       badges: ["Стабільні терміни", "Контроль якості", "Підтримка лікаря", "100% цифровий протокол"],
@@ -209,7 +212,7 @@ const COPY = {
   pl: {
     brand: "Avtor Lab",
     topbar: {
-      tagline: "Premium rekonstrukcje",
+      tagline: "Laboratorium dentystyczne w Dnieprze",
       call: "Zadzwoń",
       email: "Napisz",
     },
@@ -224,9 +227,9 @@ const COPY = {
       contact: "Kontakt",
     },
     hero: {
-      title: "Premium rekonstrukcje i precyzyjne frezowanie",
+      title: "Laboratorium dentystyczne Avtorlab",
       subtitle:
-        "Tworzymy estetyczne i funkcjonalne rozwiązania: od licówek po pełne łuki. Współpracujemy z klinikami i laboratoriami na terenie Ukrainy.",
+        "Avtorlab to laboratorium dentystyczne w Dnieprze. Wykonujemy estetyczne i funkcjonalne rekonstrukcje: od licówek po pełne łuki dla klinik i laboratoriów w całej Ukrainie.",
       ctaPrimary: "Wyślij zapytanie",
       ctaSecondary: "Zobacz usługi",
       badges: ["Stabilne terminy", "Kontrola jakości", "Wsparcie lekarza", "100% cyfrowy protokół"],
@@ -347,10 +350,154 @@ const COPY = {
     },
   },
 
+  ru: {
+    brand: "Avtor Lab",
+    topbar: {
+      tagline: "Зуботехническая лаборатория в Днепре",
+      call: "Позвонить",
+      email: "Написать",
+    },
+    nav: {
+      services: "Услуги",
+      partners: "Партнёрам",
+      education: "Обучение",
+      calculator: "Калькулятор",
+      faq: "FAQ",
+      about: "О нас",
+      blog: "Блог",
+      contact: "Контакты",
+    },
+    hero: {
+      title: "Зуботехническая лаборатория Авторлаб",
+      subtitle:
+        "Avtorlab — зуботехническая лаборатория в Днепре. Создаём эстетичные и функциональные реставрации: от виниров до полных дуг для клиник и лабораторий по всей Украине.",
+      ctaPrimary: "Отправить запрос",
+      ctaSecondary: "Смотреть услуги",
+      badges: ["Стабильные сроки", "Контроль качества", "Поддержка врача", "100% цифровой протокол"],
+      qcLine: "QC • Цифровой протокол",
+    },
+    workflow: {
+      title: "Процесс работы",
+      items: ["Сканирование / слепки", "Дизайн / согласование", "Фрезеровка / контроль качества", "Доставка / поддержка"],
+    },
+    contactBlockTitle: "Контакты",
+    services: {
+      title: "Услуги",
+      subtitle: "Работаем по цифровому и классическому протоколу. Подбираем материалы под задачу и бюджет.",
+      items: [
+        { title: "Виниры и накладки", desc: "Эстетика, натуральная анатомия, контроль цвета и прозрачности.", img: "" },
+        { title: "Циркониевые коронки", desc: "Прочность, точная посадка, стабильная окклюзия.", img: "" },
+        { title: "Тотальное протезирование", desc: "Полные дуги, реабилитации, протоколы под имплантацию.", img: "" },
+        { title: "Титановые балки", desc: "Индивидуальные конструкции, точная фрезеровка, контроль пассивности.", img: "" },
+        { title: "Окклюзионные капы", desc: "Защита, стабилизация, контроль высоты и комфорта.", img: "" },
+        { title: "Фрезерный центр", desc: "Фрезеровка STL/Exocad: цирконий, PMMA, титан (по ТЗ).", img: "" },
+      ],
+    },
+    partners: {
+      title: "Партнёрам",
+      subtitle: "Подключаем клиники и лаборатории: прозрачные условия, коммуникация и контроль качества.",
+      bullets: [
+        "Персональный менеджер и быстрая обратная связь",
+        "Стабильные сроки и отслеживание этапов",
+        "Технические рекомендации и поддержка врача",
+        "Файлы/сканы: Exocad, 3Shape, STL",
+      ],
+      cta: "Получить прайс и условия",
+      qcTitle: "Контроль качества на каждом этапе",
+      qcItems: ["Посадка и прилегание", "Окклюзия и контакты", "Толщина и границы", "Финишная обработка"],
+    },
+    education: {
+      title: "Обучение и поддержка",
+      subtitle: "Делимся протоколами, разбираем сложные кейсы, помогаем с цифровым потоком.",
+      cards: [
+        { title: "Мини-лекции для врачей", desc: "Материалы, препарирование, цементация, коммуникация лаборатория–клиника." },
+        { title: "Цифровые workflow", desc: "Скан, дизайн, техтребования, проверка посадки и окклюзии." },
+        { title: "Сопровождение сложных кейсов", desc: "Планирование, контроль эстетики, временные решения, прототипирование." },
+      ],
+      cta: "Записаться на консультацию",
+      link: "https://t.me/avtor_lab",
+    },
+    calculator: {
+      title: "Калькулятор сроков",
+      subtitle:
+        "Оцените ориентировочный срок изготовления. Фактический срок зависит от сложности и логистики.",
+      label: "Тип работы",
+      types: [
+        { key: "veneer", label: "Винир/накладка", days: 5 },
+        { key: "zirconia", label: "Циркониевая коронка", days: 7 },
+        { key: "fullarch", label: "Полная дуга", days: 14 },
+        { key: "bar", label: "Титановая балка", days: 10 },
+        { key: "splint", label: "Окклюзионная капа", days: 4 },
+        { key: "b2b", label: "Фрезерный центр", days: 3 },
+      ],
+      rush: "Срочно (ускоренно)",
+      result: "Ориентировочно:",
+      days: "дней",
+    },
+    faq: {
+      title: "FAQ",
+      subtitle: "Ответы на частые вопросы.",
+      items: [
+        {
+          q: "Какие форматы файлов вы принимаете?",
+          a: "STL, PLY (по согласованию), проекты Exocad. Лучше всего — STL с корректными границами и окклюзией.",
+        },
+        { q: "Работаете ли вы с доставкой по Украине?", a: "Да, отправляем Новой почтой/курьером. Логистику согласовываем отдельно." },
+        { q: "Можно ли получить примерку/прототип?", a: "Да, в зависимости от кейса можем сделать прототип или примерку." },
+      ],
+    },
+    about: {
+      title: "О Avtor Lab",
+      subtitle: "Соединяем эстетику, точность и контроль качества на каждом этапе.",
+      stats: [
+        { k: "20+ лет", v: "опыта работы" },
+        { k: "100%", v: "цифровые протоколы" },
+        { k: "Контроль", v: "качества на каждом этапе" },
+        { k: "Фрезерный центр", v: "услуги и поддержка" },
+      ],
+    },
+    blog: {
+      title: "Блог",
+      subtitle: "Короткие заметки о материалах, протоколах и коммуникации лаборатория–клиника.",
+      posts: [
+        { title: "Как подготовить STL для фрезеровки", desc: "Границы, окклюзия, толщина, экспорт и проверка — без лишних переделок.", tag: "Digital" },
+        { title: "Цирконий: прочность vs эстетика", desc: "Когда выбирать многослойный цирконий, а когда — облицовку.", tag: "Materials" },
+        { title: "Полная дуга: что важно в коммуникации", desc: "Данные, фото, прикус, вертикаль, временные конструкции — чтобы уменьшить переделки.", tag: "Workflow" },
+      ],
+    },
+    contact: {
+      title: "Контакты",
+      subtitle: "Напишите нам — подскажем протокол, просчитаем стоимость и сроки.",
+      formTitle: "Запрос / просчёт",
+      name: "Имя",
+      clinic: "Клиника/Лаборатория",
+      phone: "Телефон",
+      email: "Email",
+      message: "Описание кейса",
+      attach: "Прикрепить файлы (STL/фото)",
+      consent: "Соглашаюсь с обработкой персональных данных",
+      send: "Отправить",
+      sent: "Спасибо! Запрос отправлен.",
+      map: "Мы на карте",
+      mapOffline: "Карта недоступна офлайн. Адрес:",
+      openMap: "Открыть в Google Maps",
+    },
+    footer: {
+      rights: "© Avtor Lab. Все права защищены.",
+      policy: "Политика конфиденциальности",
+      terms: "Условия",
+    },
+    cta: {
+      title: "Готовы начать?",
+      subtitle: "Отправьте запрос — и мы свяжемся с вами.",
+      button: "Отправить запрос",
+    },
+  },
+
   en: {
     brand: "Avtor Lab",
     topbar: {
-      tagline: "Premium restorations",
+      tagline: "Dental laboratory in Dnipro",
       call: "Call",
       email: "Email",
     },
@@ -365,9 +512,9 @@ const COPY = {
       contact: "Contact",
     },
     hero: {
-      title: "Premium restorations and precise milling",
+      title: "Avtorlab dental laboratory",
       subtitle:
-        "We deliver aesthetic and functional solutions from veneers to full-arch cases. We work with clinics and labs across Ukraine.",
+        "Avtorlab is a dental laboratory in Dnipro. We deliver aesthetic and functional restorations from veneers to full-arch cases for clinics and labs across Ukraine.",
       ctaPrimary: "Send request",
       ctaSecondary: "View services",
       badges: ["Reliable timelines", "Quality control", "Doctor support", "100% digital protocols"],
@@ -551,8 +698,8 @@ function Topbar({ t, lang, setLang }) {
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="hidden sm:flex items-center gap-2 rounded-xl border border-neutral-800 px-2 py-1">
+          <div className="flex items-center gap-2 pl-2 sm:gap-3 sm:pl-3">
+            <div className="hidden shrink-0 sm:flex items-center gap-2 rounded-xl border border-neutral-800 pl-3 pr-2 py-1">
               <Globe className="h-4 w-4 text-neutral-400" />
               {LANGS.map((l) => (
                 <button
@@ -997,7 +1144,8 @@ function Contact({ t }) {
     };
   }, []);
 
-  const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent("Dnipro, Ukraine")}`;
+  const mapUrl = GOOGLE_MAPS_PROFILE;
+  const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent("Dnipro, Ukraine")}&output=embed`;
 
   return (
     <Section id="contact" title={t.contact.title} subtitle={t.contact.subtitle}>
@@ -1015,7 +1163,7 @@ function Contact({ t }) {
                   className="w-full h-96"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  src={`${mapUrl}&output=embed`}
+                  src={mapEmbedUrl}
                 />
               ) : (
                 <div className="p-4 text-sm text-neutral-700">
@@ -1035,7 +1183,7 @@ function Contact({ t }) {
 
         <Card className={PANEL}>
           <CardHeader>
-            <CardTitle className="text-base">Direct</CardTitle>
+            <CardTitle className="text-base">{t.contactBlockTitle}</CardTitle>
           </CardHeader>
           <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>
             <div className="flex items-center gap-2">
@@ -1116,7 +1264,7 @@ export default function AvtorLabSite() {
   useEffect(() => {
     const applyFromHash = () => {
       const h = (window.location.hash || "").replace("#", "").trim();
-      if (h === "pl" || h === "en" || h === "uk") setLang(h);
+      if (h === "pl" || h === "en" || h === "uk" || h === "ru") setLang(h);
     };
     applyFromHash();
     window.addEventListener("hashchange", applyFromHash);
