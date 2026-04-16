@@ -1,57 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://avtorlab.com.ua").replace(/\/$/, "");
-const googleMapsProfile = "https://www.google.com/maps/place/AvtorLab/@48.4391202,35.0460747,784m/data=!3m2!1e3!4b1!4m6!3m5!1s0x40dbe3874afea53b:0x56bc64e017adf841!8m2!3d48.4391202!4d35.048655!16s%2Fg%2F11yxg0n21y?entry=ttu&g_ep=EgoyMDI2MDMyMy4xIKXMDSoASAFQAw%3D%3D";
-const defaultTitle = "Зуботехническая лаборатория Авторлаб | Avtorlab dental laboratory Dnipro";
-const defaultDescription =
-  "Avtorlab — зуботехническая лаборатория в Днепре. Виниры, циркониевые коронки, полные дуги, титановые балки, каппы и услуги фрезерного центра для клиник и лабораторий.";
+import { email, googleMapsProfile, phoneTel, siteUrl, telegramUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: defaultTitle,
-    template: "%s | Avtorlab",
-  },
-  description: defaultDescription,
   applicationName: "Avtorlab",
   referrer: "origin-when-cross-origin",
-  keywords: [
-    "зуботехническая лаборатория авторлаб",
-    "зуботехническая лаборатория днепр",
-    "зуботехническая лаборатория dnipro",
-    "avtorlab",
-    "avtor lab",
-    "dental laboratory dnipro",
-    "dental lab dnipro",
-    "laboratorium dentystyczne dnipro",
-    "лаборатория зуботехническая днепр",
-  ],
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: defaultTitle,
-    description: defaultDescription,
-    url: siteUrl,
-    siteName: "Avtorlab",
-    locale: "uk_UA",
-    type: "website",
-    images: [
-      {
-        url: "/brand/logo-white.png",
-        width: 1200,
-        height: 630,
-        alt: "Avtorlab dental laboratory",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: defaultTitle,
-    description: defaultDescription,
-    images: ["/brand/logo-white.png"],
-  },
   robots: {
     index: true,
     follow: true,
@@ -64,7 +18,6 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  category: "Dental laboratory",
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
   },
@@ -76,13 +29,15 @@ const jsonLd = {
     {
       "@type": "LocalBusiness",
       "@id": `${siteUrl}#business`,
-      name: "Avtor Lab",
-      alternateName: ["Авторлаб", "Avtorlab"],
+      name: "Avtorlab",
+      alternateName: ["Авторлаб", "Avtor Lab"],
       url: siteUrl,
       image: `${siteUrl}/brand/logo-white.png`,
       logo: `${siteUrl}/brand/logo-white.png`,
-      telephone: "+380730006699",
-      email: "avtorlab1@gmail.com",
+      telephone: phoneTel,
+      email,
+      description:
+        "Dental laboratory in Dnipro for zirconia crowns, ceramic crowns, veneers, ceramic overlays, titanium bars, milled crowns, and digital restorative workflows.",
       areaServed: ["Dnipro", "Ukraine"],
       address: {
         "@type": "PostalAddress",
@@ -92,37 +47,56 @@ const jsonLd = {
       hasMap: googleMapsProfile,
       sameAs: [
         googleMapsProfile,
-        "https://t.me/avtor_lab",
+        telegramUrl,
         "https://www.instagram.com/yevhen_bitsenko/",
         "https://www.facebook.com/evgeniy.pavlovich.1",
       ],
       contactPoint: [
         {
           "@type": "ContactPoint",
-          telephone: "+380730006699",
+          telephone: phoneTel,
           contactType: "customer support",
           availableLanguage: ["Ukrainian", "Russian", "Polish", "English"],
         },
       ],
+      knowsAbout: [
+        "Зуботехническая лаборатория",
+        "Зубной техник",
+        "Циркониевые коронки",
+        "Циркониевые виниры",
+        "Керамические коронки",
+        "Керамические виниры",
+        "Керамические накладки",
+        "Титановые балки",
+        "Фрезерованные коронки",
+        "Циркон",
+      ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Dental laboratory services",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Zirconia crowns" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Ceramic crowns" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Zirconia veneers" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Ceramic veneers" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Ceramic overlays" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Titanium bars" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Milled crowns" } },
+        ],
+      },
     },
     {
       "@type": "WebSite",
       "@id": `${siteUrl}#website`,
       url: siteUrl,
       name: "Avtorlab",
-      publisher: {
-        "@id": `${siteUrl}#business`,
-      },
+      publisher: { "@id": `${siteUrl}#business` },
       inLanguage: ["uk", "ru", "pl", "en"],
     },
   ],
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="uk">
       <body>

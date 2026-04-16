@@ -1,5 +1,8 @@
 import AvtorLabSite from "./AvtorLabSite";
+import { buildHomeMetadata } from "@/lib/seo";
 
-export default function Home() {
-  return <AvtorLabSite />;
+export const metadata = buildHomeMetadata("uk");
+
+export default function HomePage() {
+  return <AvtorLabSite initialLang="uk" />;
 }

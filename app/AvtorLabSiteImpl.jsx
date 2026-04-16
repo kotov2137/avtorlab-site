@@ -1,654 +1,455 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useMemo } from "react";
 import Image from "next/image";
-import {
-  Check,
-  Globe,
-  Phone,
-  Mail,
-  MapPin,
-  ArrowRight,
-  Upload,
-  Shield,
-  Calculator,
-  FileText,
-  Send,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Check, Globe, Mail, MapPin, Phone, Shield } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-
-/** ---- CONFIG ---- */
-const PHONE_DISPLAY = "+38 (073) 000-66-99";
-const PHONE_TEL = "+380730006699";
-const EMAIL = "avtorlab1@gmail.com";
-const TG_LAB = "https://t.me/avtor_lab";
-const GOOGLE_MAPS_PROFILE = "https://www.google.com/maps/place/AvtorLab/@48.4391202,35.0460747,784m/data=!3m2!1e3!4b1!4m6!3m5!1s0x40dbe3874afea53b:0x56bc64e017adf841!8m2!3d48.4391202!4d35.048655!16s%2Fg%2F11yxg0n21y?entry=ttu&g_ep=EgoyMDI2MDMyMy4xIKXMDSoASAFQAw%3D%3D";
+import {
+  email,
+  googleMapsProfile,
+  langPath,
+  phoneDisplay,
+  phoneTel,
+  telegramUrl,
+} from "@/lib/seo";
 
 const SOCIALS = [
-  { label: "Google Maps", href: GOOGLE_MAPS_PROFILE, icon: MapPin },
+  { label: "Google Maps", href: googleMapsProfile, icon: MapPin },
   { label: "Instagram", href: "https://www.instagram.com/yevhen_bitsenko/", icon: Globe },
   { label: "Facebook", href: "https://www.facebook.com/evgeniy.pavlovich.1", icon: Globe },
-  // поменяй USERNAME на реальный ник
-  { label: "Telegram", href: "https://t.me/avtor_lab", icon: Globe },
+  { label: "Telegram", href: telegramUrl, icon: Globe },
 ];
 
 const LANGS = [
-  { key: "uk", label: "UA" },
-  { key: "ru", label: "RU" },
-  { key: "pl", label: "PL" },
-  { key: "en", label: "EN" },
+  { key: "uk", label: "UA", href: "/" },
+  { key: "ru", label: "RU", href: "/ru" },
+  { key: "pl", label: "PL", href: "/pl" },
+  { key: "en", label: "EN", href: "/en" },
 ];
 
 const PAGE_BG = "bg-black text-white";
 const PAGE_BORDER = "border-neutral-800";
-
-// on dark
+const PANEL = "rounded-2xl bg-white text-black border border-neutral-200";
 const ON_DARK_TITLE = "text-white";
 const ON_DARK_TEXT = "text-neutral-200";
 const ON_DARK_MUTED = "text-neutral-300";
-
-// text on WHITE background (cards)
-const ON_LIGHT_TITLE = "text-black";
 const ON_LIGHT_TEXT = "text-neutral-700";
-const ON_LIGHT_MUTED = "text-neutral-600";
 
-// panels (white boxes)
-const PANEL = "rounded-2xl bg-white text-black border border-neutral-200";
-
-
-/** ---- COPY ---- */
 const COPY = {
   uk: {
-    brand: "Avtor Lab",
+    brand: "Avtorlab",
     topbar: {
-      tagline: "Зуботехнічна лабораторія в Дніпрі",
+      tagline: "Зуботехнічна лабораторія • Дніпро",
       call: "Подзвонити",
       email: "Написати",
     },
     nav: {
       services: "Послуги",
-      partners: "Партнерам",
-      education: "Навчання",
-      calculator: "Калькулятор",
+      keywords: "Напрями",
+      process: "Процес",
       faq: "FAQ",
       about: "Про нас",
-      blog: "Блог",
       contact: "Контакти",
     },
     hero: {
       title: "Зуботехнічна лабораторія Авторлаб",
       subtitle:
-        "Avtorlab — зуботехнічна лабораторія в Дніпрі. Виготовляємо естетичні та функціональні реставрації: від вінірів до повних дуг для клінік і лабораторій по всій Україні.",
+        "Avtorlab — зуботехнічна лабораторія у Дніпрі для клінік, стоматологів та лікарів, яким потрібні цирконієві коронки, керамічні коронки, вініри, керамічні накладки, титанові балки та точне цифрове фрезерування.",
       ctaPrimary: "Надіслати запит",
-      ctaSecondary: "Дивитися послуги",
-      badges: ["Стабільні терміни", "Контроль якості", "Підтримка лікаря", "100% цифровий протокол"],
-      qcLine: "QC • Цифровий протокол",
+      ctaSecondary: "Дивитися напрями",
+      badges: ["Дніпро", "Цифровий протокол", "Стабільні терміни", "Контроль якості"],
+      qcLine: "Лабораторний контроль якості на кожному етапі",
+      workflowTitle: "Що отримує клініка",
+      workflowItems: [
+        "Планування кейсу та узгодження конструкції",
+        "Цифрове моделювання та фрезерування",
+        "Контроль посадки, контактів та естетики",
+        "Підтримка лікаря й зрозуміла комунікація",
+      ],
+      contactTitle: "Швидкий контакт",
     },
-    workflow: {
-      title: "Процес роботи",
-      items: ["Сканування / відбитки", "Дизайн / погодження", "Фрезерування / контроль якості", "Доставка / підтримка"],
-    },
-    contactBlockTitle: "Контакти",
     services: {
-      title: "Послуги",
+      title: "Основні стоматологічні роботи лабораторії",
       subtitle:
-        "Працюємо у цифровому та класичному протоколі. Підбираємо матеріали під задачу та бюджет.",
+        "Робимо саме ті роботи, за якими нас реально шукають: коронки, вініри, накладки, балки та цифрові конструкції для повсякденної клінічної практики.",
+      bannerAlt: "Зуботехнічна лабораторія Avtorlab — роботи та фрезерування",
+      galleryAlt: "Зразок стоматологічної реставрації Avtorlab",
       items: [
-        { title: "Вініри та накладки", desc: "Естетика, натуральна анатомія, контроль кольору та прозорості.", img: "" },
-        { title: "Цирконієві коронки", desc: "Міцність, точність посадки, стабільна оклюзія.", img: "" },
-        { title: "Тотальне протезування", desc: "Повні дуги, реабілітації, протоколи під імплантацію.", img: "" },
-        { title: "Титанові балки", desc: "Індивідуальні конструкції, точне фрезерування, контроль пасивності.", img: "" },
-        { title: "Оклюзійні капи", desc: "Захист, стабілізація, контроль висоти та комфорту.", img: "" },
-        { title: "Фрезерний центр", desc: "Фрезерування STL/Exocad: цирконій, PMMA, титан (за ТЗ).", img: "" },
+        { title: "Цирконієві коронки", desc: "Роботи для жувальної та фронтальної групи з точним приляганням і стабільною оклюзією." },
+        { title: "Керамічні коронки", desc: "Естетичні рішення там, де критично важливі світлопроникність, форма та колір." },
+        { title: "Цирконієві та керамічні вініри", desc: "Мікропротезування для естетичних кейсів із керованим дизайном та прогнозованою посадкою." },
+        { title: "Керамічні накладки", desc: "Функціональні та естетичні реставрації для збереження тканин зуба." },
+        { title: "Титанові балки", desc: "Індивідуальні фрезеровані конструкції для імплантаційних і повнодужних робіт." },
+        { title: "Фрезеровані коронки та роботи з циркону", desc: "Цифрове фрезерування конструкцій із контрольованою геометрією та повторюваною якістю." },
       ],
     },
-    partners: {
-      title: "Партнерам",
+    keywords: {
+      title: "Ключові напрями роботи",
       subtitle:
-        "Підключаємо клініки та лабораторії: прозорі умови, комунікація, контроль якості.",
-      bullets: [
-        "Персональний менеджер та швидкий зворотний зв’язок",
-        "Стабільні терміни та трекінг етапів",
-        "Технічні рекомендації та підтримка лікаря",
-        "Файли/скани: Exocad, 3Shape, STL",
+        "Основні види робіт і матеріали, з якими лабораторія працює у щоденній клінічній практиці.",
+      searchLabel: "Пошуковий запит",
+      items: [
+        { title: "Зуботехнічна лабораторія", search: "Зуботехническая лаборатория", desc: "Лабораторія у Дніпрі для цифрових та класичних ортопедичних робіт." },
+        { title: "Зубний технік", search: "Зубной техник", desc: "Працюємо як технічний партнер для стоматологів та клінік." },
+        { title: "Цирконієві коронки", search: "Циркониевые коронки", desc: "Коронки з циркону для міцності, стабільності та акуратної посадки." },
+        { title: "Цирконієві вініри", search: "Циркониевые виниры", desc: "Естетичні роботи для кейсів, де потрібні міцність і контрольований результат." },
+        { title: "Керамічні коронки", search: "Керамические коронки", desc: "Реставрації з кераміки для фронтальної та естетичної групи." },
+        { title: "Керамічні вініри", search: "Керамические виниры", desc: "Тонкі естетичні реставрації з роботою по формі, кольору та прозорості." },
+        { title: "Керамічні накладки", search: "Керамические накладки", desc: "Мікропротезування з функціональною анатомією та контролем меж." },
+        { title: "Титанові балки", search: "Титановые балки", desc: "Індивідуальні фрезеровані балки для імплантаційних робіт." },
+        { title: "Фрезеровані коронки", search: "Фрезерованные коронки", desc: "Цифрові коронки з прогнозованою геометрією та стабільною повторюваністю." },
+        { title: "Коронка", search: "Коронка", desc: "Окремі коронки та комплексні ортопедичні конструкції під клінічне завдання." },
+        { title: "Циркон", search: "Циркон", desc: "Роботи з циркону для клінік, де важливі і естетика, і міцність." },
       ],
-      cta: "Отримати прайс та умови",
-
-      qcTitle: "Контроль якості на кожному етапі",
-      qcItems: ["Посадка та прилягання", "Оклюзія та контакти", "Товщина та межі", "Фінішна обробка"],
     },
-    education: {
-      title: "Навчання та підтримка",
-      subtitle: "Ділимось протоколами, розбираємо складні кейси, допомагаємо з цифровим потоком.",
-      cards: [
-        { title: "Міні-лекції для лікарів", desc: "Матеріали, преп, цементація, комунікація лабораторія–клініка." },
-        { title: "Цифрові воркфлоу", desc: "Скан, дизайн, техвимоги, перевірка посадки та оклюзії." },
-        { title: "Супровід складних кейсів", desc: "Планування, контроль естетики, тимчасові рішення, прототипування." },
+    process: {
+      title: "Як працює лабораторія",
+      subtitle: "Без декоративної мішури: зрозумілий процес, контроль якості та нормальна технічна комунікація.",
+      blocks: [
+        {
+          title: "Процес роботи",
+          items: [
+            "Скани або відбитки, фото та ТЗ від лікаря",
+            "Погодження дизайну і матеріалу під кейс",
+            "Виготовлення, контроль та передача роботи",
+          ],
+        },
+        {
+          title: "Для кого це",
+          items: [
+            "Стоматологічні клініки",
+            "Окремі лікарі-ортопеди",
+            "Партнерські лабораторії та B2B-фрезерування",
+          ],
+        },
       ],
-      cta: "Записатися на консультацію",
-      link: "https://t.me/avtor_lab",
-    },
-    calculator: {
-      title: "Калькулятор термінів",
-      subtitle:
-        "Оцініть орієнтовний термін виробництва. Фактичний термін залежить від складності та логістики.",
-      label: "Тип роботи",
-      types: [
-        { key: "veneer", label: "Вінір/накладка", days: 5 },
-        { key: "zirconia", label: "Цирконієва коронка", days: 7 },
-        { key: "fullarch", label: "Повна дуга", days: 14 },
-        { key: "bar", label: "Титанова балка", days: 10 },
-        { key: "splint", label: "Оклюзійна капа", days: 4 },
-        { key: "b2b", label: "Фрезерний центр", days: 3 },
-      ],
-      rush: "Терміново (прискорено)",
-      result: "Орієнтовно:",
-      days: "днів",
     },
     faq: {
       title: "FAQ",
-      subtitle: "Відповіді на часті питання.",
+      subtitle: "Коротко по суті — про роботи, матеріали та файли.",
       items: [
-        {
-          q: "Які формати файлів ви приймаєте?",
-          a: "STL, PLY (за домовленістю), Exocad-проєкти. Найкраще — STL з коректними межами та оклюзією.",
-        },
-        { q: "Чи працюєте ви з доставкою по Україні?", a: "Так, відправляємо НП/кур’єром. Логістику узгоджуємо окремо." },
-        { q: "Чи можна отримати примірку/прототип?", a: "Так, залежно від кейсу можемо зробити прототип/примірку." },
+        { q: "Чи робите ви цирконієві коронки та керамічні коронки?", a: "Так. Це один з базових напрямів Avtorlab, разом з вінірами, накладками та роботами по циркону." },
+        { q: "Чи можна замовити титанові балки та фрезеровані коронки?", a: "Так. Лабораторія працює з цифровими конструкціями, титановими балками та фрезерованими коронками під клінічне ТЗ." },
+        { q: "Які файли ви приймаєте?", a: "STL, скани, фото, технічний опис кейсу та інші дані, потрібні для узгодження роботи." },
       ],
     },
     about: {
-      title: "Про Avtor Lab",
-      subtitle: "Поєднуємо естетику, точність і контроль якості на кожному етапі.",
+      title: "Про Avtorlab",
+      subtitle:
+        "Avtorlab — зуботехнічна лабораторія у Дніпрі. Ми не малюємо повітряні обіцянки, а робимо роботи, які повинні нормально сідати, працювати та виглядати переконливо.",
       stats: [
-        { k: "20+ років", v: "стаж роботи" },
-        { k: "100%", v: "цифрові протоколи" },
-        { k: "Контроль", v: "якості на кожному етапі" },
-        { k: "Фрезерний центр", v: "послуги та підтримка" },
-      ],
-    },
-    blog: {
-      title: "Блог",
-      subtitle: "Короткі нотатки про матеріали, протоколи та комунікацію лабораторія–клініка.",
-      posts: [
-        { title: "Як підготувати STL для фрезерування", desc: "Межі, оклюзія, товщина, експорт і перевірка — без зайвих переробок.", tag: "Digital" },
-        { title: "Цирконій: міцність vs естетика", desc: "Коли обирати багатошаровий цирконій, а коли — облицювання.", tag: "Materials" },
-        { title: "Повна дуга: що важливо в комунікації", desc: "Дані, фото, прикус, вертикаль, тимчасові — щоб зменшити переробки.", tag: "Workflow" },
+        { k: "Дніпро", v: "локальна присутність і Google Maps профіль" },
+        { k: "Циркон", v: "коронки, вініри та цифрові конструкції" },
+        { k: "Кераміка", v: "коронки, вініри та накладки" },
+        { k: "B2B", v: "робота з клініками та лабораторіями" },
       ],
     },
     contact: {
       title: "Контакти",
-      subtitle: "Напишіть нам — підкажемо протокол, прорахуємо вартість та терміни.",
-      formTitle: "Запит / прорахунок",
-      name: "Ім’я",
-      clinic: "Клініка/Лабораторія",
-      phone: "Телефон",
-      email: "Email",
-      message: "Опис кейсу",
-      attach: "Прикріпити файли (STL/фото)",
-      consent: "Погоджуюсь з обробкою персональних даних",
-      send: "Надіслати",
-      sent: "Дякуємо! Запит надіслано.",
-      map: "Ми на мапі",
-      mapOffline: "Мапа недоступна офлайн. Адреса:",
-      openMap: "Відкрити в Google Maps",
+      subtitle: "Напишіть або зателефонуйте. Швидше за все, це корисніше, ніж ще один раунд домислів у переписці.",
+      map: "Google Maps",
+      mapOffline: "Мапа недоступна офлайн. Відкрити профіль:",
+      openMap: "Відкрити у Google Maps",
+      blockTitle: "Канали зв'язку",
     },
-    footer: {
-      rights: "© Avtor Lab. Всі права захищені.",
-      policy: "Політика конфіденційності",
-      terms: "Умови",
-    },
-    cta: {
-      title: "Готові почати?",
-      subtitle: "Надішліть запит і ми зв’яжемося з вами.",
-      button: "Надіслати запит",
-    },
+    footer: { rights: "© Avtorlab. Всі права захищені." },
+    cta: { title: "Потрібен прорахунок або консультація?", subtitle: "Надішліть кейс — лабораторія повернеться з відповіддю.", button: "Написати" },
   },
-  pl: {
-    brand: "Avtor Lab",
-    topbar: {
-      tagline: "Laboratorium dentystyczne w Dnieprze",
-      call: "Zadzwoń",
-      email: "Napisz",
-    },
-    nav: {
-      services: "Usługi",
-      partners: "Dla partnerów",
-      education: "Szkolenia",
-      calculator: "Kalkulator",
-      faq: "FAQ",
-      about: "O nas",
-      blog: "Blog",
-      contact: "Kontakt",
-    },
-    hero: {
-      title: "Laboratorium dentystyczne Avtorlab",
-      subtitle:
-        "Avtorlab to laboratorium dentystyczne w Dnieprze. Wykonujemy estetyczne i funkcjonalne rekonstrukcje: od licówek po pełne łuki dla klinik i laboratoriów w całej Ukrainie.",
-      ctaPrimary: "Wyślij zapytanie",
-      ctaSecondary: "Zobacz usługi",
-      badges: ["Stabilne terminy", "Kontrola jakości", "Wsparcie lekarza", "100% cyfrowy protokół"],
-      qcLine: "QC • Cyfrowy protokół",
-    },
-    workflow: {
-      title: "Proces pracy",
-      items: ["Skan / wyciski", "Projekt / akceptacja", "Frezowanie / kontrola jakości", "Dostawa / wsparcie"],
-    },
-    contactBlockTitle: "Kontakt",
-    services: {
-      title: "Usługi",
-      subtitle: "Pracujemy w protokole cyfrowym i klasycznym. Dobieramy materiały do zadania i budżetu.",
-      items: [
-        { title: "Licówki i onlaye", desc: "Estetyka, naturalna anatomia, kontrola koloru i przezierności.", img: "" },
-        { title: "Korony cyrkonowe", desc: "Wytrzymałość, precyzyjne dopasowanie, stabilna okluzja.", img: "" },
-        { title: "Rehabilitacje pełnołukowe", desc: "Pełne łuki, rehabilitacje, protokoły pod implanty.", img: "" },
-        { title: "Belki tytanowe", desc: "Konstrukcje indywidualne, precyzyjne frezowanie, kontrola pasywności.", img: "" },
-        { title: "Szyny okluzyjne", desc: "Ochrona, stabilizacja, kontrola wysokości i komfortu.", img: "" },
-        { title: "Centrum frezowania", desc: "Frezowanie STL/Exocad: cyrkon, PMMA, tytan (wg specyfikacji).", img: "" },
-      ],
-    },
-    partners: {
-      title: "Dla partnerów",
-      subtitle: "Dołączamy kliniki i laboratoria: jasne warunki, komunikacja i kontrola jakości.",
-      bullets: [
-        "Osobisty opiekun i szybka informacja zwrotna",
-        "Stabilne terminy i śledzenie etapów",
-        "Rekomendacje techniczne i wsparcie lekarza",
-        "Pliki/skany: Exocad, 3Shape, STL",
-      ],
-      cta: "Poproś o cennik i warunki",
-
-      qcTitle: "Kontrola jakości na każdym etapie",
-      qcItems: ["Dopasowanie i brzegi", "Okluzja i kontakty", "Grubość i granice", "Wykończenie"],
-    },
-    education: {
-      title: "Szkolenia i wsparcie",
-      subtitle: "Dzielimy się protokołami, omawiamy trudne przypadki, pomagamy w cyfrowym workflow.",
-      cards: [
-        { title: "Mini-wykłady dla lekarzy", desc: "Materiały, preparacja, cementowanie, komunikacja laboratorium–klinika." },
-        { title: "Cyfrowe workflow", desc: "Skan, projekt, wymagania techniczne, kontrola dopasowania i okluzji." },
-        { title: "Wsparcie trudnych przypadków", desc: "Planowanie, kontrola estetyki, tymczasówki, prototypowanie." },
-      ],
-      cta: "Umów konsultację",
-      link: "https://t.me/avtor_lab",
-    },
-    calculator: {
-      title: "Kalkulator terminów",
-      subtitle: "Oszacuj orientacyjny czas wykonania (bez logistyki).",
-      label: "Rodzaj pracy",
-      types: [
-        { key: "veneer", label: "Licówka/onlay", days: 5 },
-        { key: "zirconia", label: "Korona cyrkonowa", days: 7 },
-        { key: "fullarch", label: "Pełny łuk", days: 14 },
-        { key: "bar", label: "Belka tytanowa", days: 10 },
-        { key: "splint", label: "Szyna okluzyjna", days: 4 },
-        { key: "b2b", label: "Centrum frezowania", days: 3 },
-      ],
-      rush: "Pilne (przyspieszone)",
-      result: "Orientacyjnie:",
-      days: "dni",
-    },
-    faq: {
-      title: "FAQ",
-      subtitle: "Odpowiedzi na najczęstsze pytania.",
-      items: [
-        { q: "Jakie formaty plików przyjmujecie?", a: "STL, PLY (po uzgodnieniu), projekty Exocad. Najlepiej — STL z poprawnymi granicami i okluzją." },
-        { q: "Czy realizujecie dostawy na terenie Ukrainy?", a: "Tak — wysyłka kurierem/Nową Pocztą. Logistykę ustalamy osobno." },
-        { q: "Czy można wykonać przymiarkę/prototyp?", a: "Tak, zależnie od przypadku możemy przygotować prototyp lub przymiarkę." },
-      ],
-    },
-    about: {
-      title: "O Avtor Lab",
-      subtitle: "Łączymy estetykę, precyzję i kontrolę jakości na każdym etapie.",
-      stats: [
-        { k: "20+ lat", v: "doświadczenia" },
-        { k: "100%", v: "cyfrowe protokoły" },
-        { k: "Kontrola", v: "jakości na każdym etapie" },
-        { k: "Centrum frezowania", v: "usługi i wsparcie" },
-      ],
-    },
-    blog: {
-      title: "Blog",
-      subtitle: "Krótkie notatki o materiałach, protokołach i komunikacji laboratorium–klinika.",
-      posts: [
-        { title: "Jak przygotować STL do frezowania", desc: "Granice, okluzja, grubość, eksport i weryfikacja — bez zbędnych poprawek.", tag: "Digital" },
-        { title: "Cyrkon: wytrzymałość vs estetyka", desc: "Kiedy wybrać cyrkon wielowarstwowy, a kiedy licowanie.", tag: "Materials" },
-        { title: "Pełny łuk: co jest kluczowe w komunikacji", desc: "Dane, zdjęcia, zwarcie, wysokość, tymczasówki — żeby ograniczyć poprawki.", tag: "Workflow" },
-      ],
-    },
-    contact: {
-      title: "Kontakt",
-      subtitle: "Napisz do nas — podpowiemy protokół, wycenimy i podamy terminy.",
-      formTitle: "Zapytanie / wycena",
-      name: "Imię",
-      clinic: "Klinika/Laboratorium",
-      phone: "Telefon",
-      email: "Email",
-      message: "Opis przypadku",
-      attach: "Dołącz pliki (STL/zdjęcia)",
-      consent: "Wyrażam zgodę na przetwarzanie danych osobowych",
-      send: "Wyślij",
-      sent: "Dziękujemy! Zapytanie zostało wysłane.",
-      map: "Mapa",
-      mapOffline: "Mapa jest niedostępna offline. Adres:",
-      openMap: "Otwórz w Google Maps",
-    },
-    footer: {
-      rights: "© Avtor Lab. Wszelkie prawa zastrzeżone.",
-      policy: "Polityka prywatności",
-      terms: "Warunki",
-    },
-    cta: {
-      title: "Gotowi zacząć?",
-      subtitle: "Wyślij zapytanie — skontaktujemy się.",
-      button: "Wyślij zapytanie",
-    },
-  },
-
   ru: {
-    brand: "Avtor Lab",
+    brand: "Avtorlab",
     topbar: {
-      tagline: "Зуботехническая лаборатория в Днепре",
+      tagline: "Зуботехническая лаборатория • Днепр",
       call: "Позвонить",
       email: "Написать",
     },
     nav: {
       services: "Услуги",
-      partners: "Партнёрам",
-      education: "Обучение",
-      calculator: "Калькулятор",
+      keywords: "Направления",
+      process: "Процесс",
       faq: "FAQ",
       about: "О нас",
-      blog: "Блог",
       contact: "Контакты",
     },
     hero: {
       title: "Зуботехническая лаборатория Авторлаб",
       subtitle:
-        "Avtorlab — зуботехническая лаборатория в Днепре. Создаём эстетичные и функциональные реставрации: от виниров до полных дуг для клиник и лабораторий по всей Украине.",
+        "Avtorlab — зуботехническая лаборатория в Днепре для клиник и стоматологов, которым нужны циркониевые коронки, керамические коронки, циркониевые виниры, керамические виниры, керамические накладки, титановые балки и точное цифровое фрезерование.",
       ctaPrimary: "Отправить запрос",
-      ctaSecondary: "Смотреть услуги",
-      badges: ["Стабильные сроки", "Контроль качества", "Поддержка врача", "100% цифровой протокол"],
-      qcLine: "QC • Цифровой протокол",
+      ctaSecondary: "Смотреть направления",
+      badges: ["Днепр", "Цифровой протокол", "Стабильные сроки", "Контроль качества"],
+      qcLine: "Лабораторный контроль качества на каждом этапе",
+      workflowTitle: "Что получает клиника",
+      workflowItems: [
+        "Планирование кейса и согласование конструкции",
+        "Цифровое моделирование и фрезерование",
+        "Контроль посадки, контактов и эстетики",
+        "Поддержка врача и понятная коммуникация",
+      ],
+      contactTitle: "Быстрый контакт",
     },
-    workflow: {
-      title: "Процесс работы",
-      items: ["Сканирование / слепки", "Дизайн / согласование", "Фрезеровка / контроль качества", "Доставка / поддержка"],
-    },
-    contactBlockTitle: "Контакты",
     services: {
-      title: "Услуги",
-      subtitle: "Работаем по цифровому и классическому протоколу. Подбираем материалы под задачу и бюджет.",
-      items: [
-        { title: "Виниры и накладки", desc: "Эстетика, натуральная анатомия, контроль цвета и прозрачности.", img: "" },
-        { title: "Циркониевые коронки", desc: "Прочность, точная посадка, стабильная окклюзия.", img: "" },
-        { title: "Тотальное протезирование", desc: "Полные дуги, реабилитации, протоколы под имплантацию.", img: "" },
-        { title: "Титановые балки", desc: "Индивидуальные конструкции, точная фрезеровка, контроль пассивности.", img: "" },
-        { title: "Окклюзионные капы", desc: "Защита, стабилизация, контроль высоты и комфорта.", img: "" },
-        { title: "Фрезерный центр", desc: "Фрезеровка STL/Exocad: цирконий, PMMA, титан (по ТЗ).", img: "" },
-      ],
-    },
-    partners: {
-      title: "Партнёрам",
-      subtitle: "Подключаем клиники и лаборатории: прозрачные условия, коммуникация и контроль качества.",
-      bullets: [
-        "Персональный менеджер и быстрая обратная связь",
-        "Стабильные сроки и отслеживание этапов",
-        "Технические рекомендации и поддержка врача",
-        "Файлы/сканы: Exocad, 3Shape, STL",
-      ],
-      cta: "Получить прайс и условия",
-      qcTitle: "Контроль качества на каждом этапе",
-      qcItems: ["Посадка и прилегание", "Окклюзия и контакты", "Толщина и границы", "Финишная обработка"],
-    },
-    education: {
-      title: "Обучение и поддержка",
-      subtitle: "Делимся протоколами, разбираем сложные кейсы, помогаем с цифровым потоком.",
-      cards: [
-        { title: "Мини-лекции для врачей", desc: "Материалы, препарирование, цементация, коммуникация лаборатория–клиника." },
-        { title: "Цифровые workflow", desc: "Скан, дизайн, техтребования, проверка посадки и окклюзии." },
-        { title: "Сопровождение сложных кейсов", desc: "Планирование, контроль эстетики, временные решения, прототипирование." },
-      ],
-      cta: "Записаться на консультацию",
-      link: "https://t.me/avtor_lab",
-    },
-    calculator: {
-      title: "Калькулятор сроков",
+      title: "Основные работы лаборатории",
       subtitle:
-        "Оцените ориентировочный срок изготовления. Фактический срок зависит от сложности и логистики.",
-      label: "Тип работы",
-      types: [
-        { key: "veneer", label: "Винир/накладка", days: 5 },
-        { key: "zirconia", label: "Циркониевая коронка", days: 7 },
-        { key: "fullarch", label: "Полная дуга", days: 14 },
-        { key: "bar", label: "Титановая балка", days: 10 },
-        { key: "splint", label: "Окклюзионная капа", days: 4 },
-        { key: "b2b", label: "Фрезерный центр", days: 3 },
+        "На сайте выделены именно те услуги, по которым нас должны находить: коронки, виниры, накладки, титановые балки, циркон и цифровые конструкции.",
+      bannerAlt: "Зуботехническая лаборатория Avtorlab — работы и фрезерование",
+      galleryAlt: "Пример стоматологической реставрации Avtorlab",
+      items: [
+        { title: "Циркониевые коронки", desc: "Работы для жевательной и фронтальной группы с точной посадкой и контролем окклюзии." },
+        { title: "Керамические коронки", desc: "Эстетические конструкции там, где важны цвет, прозрачность и анатомия." },
+        { title: "Циркониевые и керамические виниры", desc: "Микропротезирование для эстетических кейсов с понятным цифровым процессом." },
+        { title: "Керамические накладки", desc: "Функциональные и эстетические реставрации с бережным подходом к тканям зуба." },
+        { title: "Титановые балки", desc: "Индивидуальные фрезерованные конструкции для имплантационных и полнодуговых работ." },
+        { title: "Фрезерованные коронки и работы из циркона", desc: "Цифровое фрезерование конструкций с контролируемой геометрией и повторяемостью." },
       ],
-      rush: "Срочно (ускоренно)",
-      result: "Ориентировочно:",
-      days: "дней",
+    },
+    keywords: {
+      title: "Ключевые направления работ",
+      subtitle:
+        "Основные виды работ и материалы, с которыми лаборатория работает для клиник, стоматологов и ортопедических кейсов.",
+      searchLabel: "Поисковый ключ",
+      items: [
+        { title: "Зуботехническая лаборатория", search: "Зуботехническая лаборатория", desc: "Лаборатория в Днепре для цифровых и классических ортопедических работ." },
+        { title: "Зубной техник", search: "Зубной техник", desc: "Технический партнёр для стоматологов, ортопедов и клиник." },
+        { title: "Циркониевые коронки", search: "Циркониевые коронки", desc: "Коронки из циркона для прочности, точной посадки и стабильной функции." },
+        { title: "Циркониевые виниры", search: "Циркониевые виниры", desc: "Эстетические конструкции для кейсов, где важна и прочность, и контролируемый результат." },
+        { title: "Керамические коронки", search: "Керамические коронки", desc: "Керамика для эстетической зоны и клинических задач, где важна натуральность." },
+        { title: "Керамические виниры", search: "Керамические виниры", desc: "Тонкие эстетические реставрации с работой по форме, цвету и прозрачности." },
+        { title: "Керамические накладки", search: "Керамические накладки", desc: "Микропротезирование с функциональной анатомией и контролем краевых зон." },
+        { title: "Титановые балки", search: "Титановые балки", desc: "Фрезерованные балки и конструкции для имплантационных работ." },
+        { title: "Фрезерованные коронки", search: "Фрезерованные коронки", desc: "Цифровые коронки с предсказуемой геометрией и повторяемым качеством." },
+        { title: "Коронка", search: "Коронка", desc: "Одиночные коронки и комплексные ортопедические конструкции под конкретную задачу." },
+        { title: "Циркон", search: "Циркон", desc: "Работы из циркона для клиник, где важны эстетика, прочность и стабильность." },
+      ],
+    },
+    process: {
+      title: "Как работает лаборатория",
+      subtitle: "Без фокусов: нормальный процесс, контроль качества и техническая коммуникация по делу.",
+      blocks: [
+        {
+          title: "Процесс работы",
+          items: [
+            "Сканы или оттиски, фото и ТЗ от врача",
+            "Согласование материала, дизайна и сроков",
+            "Изготовление, контроль и передача работы",
+          ],
+        },
+        {
+          title: "Для кого это",
+          items: [
+            "Стоматологические клиники",
+            "Отдельные врачи-ортопеды",
+            "Партнёрские лаборатории и B2B-фрезеровка",
+          ],
+        },
+      ],
     },
     faq: {
       title: "FAQ",
-      subtitle: "Ответы на частые вопросы.",
+      subtitle: "Коротко и без сантиментов — про услуги, материалы и файлы.",
       items: [
-        {
-          q: "Какие форматы файлов вы принимаете?",
-          a: "STL, PLY (по согласованию), проекты Exocad. Лучше всего — STL с корректными границами и окклюзией.",
-        },
-        { q: "Работаете ли вы с доставкой по Украине?", a: "Да, отправляем Новой почтой/курьером. Логистику согласовываем отдельно." },
-        { q: "Можно ли получить примерку/прототип?", a: "Да, в зависимости от кейса можем сделать прототип или примерку." },
+        { q: "Вы делаете циркониевые коронки и керамические коронки?", a: "Да. Это одно из основных направлений Avtorlab вместе с винирами, накладками, цирконом и цифровыми работами." },
+        { q: "Можно заказать титановые балки и фрезерованные коронки?", a: "Да. Лаборатория работает с титановыми балками, фрезерованными коронками и другими цифровыми конструкциями под клиническое ТЗ." },
+        { q: "Какие файлы вы принимаете?", a: "STL, сканы, фото, техническое описание кейса и другие данные, которые нужны для согласования конструкции." },
       ],
     },
     about: {
-      title: "О Avtor Lab",
-      subtitle: "Соединяем эстетику, точность и контроль качества на каждом этапе.",
+      title: "О Avtorlab",
+      subtitle:
+        "Avtorlab — зуботехническая лаборатория в Днепре. Мы не обещаем чудеса на слайдах, а делаем работы, которые должны нормально садиться, работать и выглядеть убедительно.",
       stats: [
-        { k: "20+ лет", v: "опыта работы" },
-        { k: "100%", v: "цифровые протоколы" },
-        { k: "Контроль", v: "качества на каждом этапе" },
-        { k: "Фрезерный центр", v: "услуги и поддержка" },
-      ],
-    },
-    blog: {
-      title: "Блог",
-      subtitle: "Короткие заметки о материалах, протоколах и коммуникации лаборатория–клиника.",
-      posts: [
-        { title: "Как подготовить STL для фрезеровки", desc: "Границы, окклюзия, толщина, экспорт и проверка — без лишних переделок.", tag: "Digital" },
-        { title: "Цирконий: прочность vs эстетика", desc: "Когда выбирать многослойный цирконий, а когда — облицовку.", tag: "Materials" },
-        { title: "Полная дуга: что важно в коммуникации", desc: "Данные, фото, прикус, вертикаль, временные конструкции — чтобы уменьшить переделки.", tag: "Workflow" },
+        { k: "Днепр", v: "локальное присутствие и профиль Google Maps" },
+        { k: "Циркон", v: "коронки, виниры и цифровые конструкции" },
+        { k: "Керамика", v: "коронки, виниры и накладки" },
+        { k: "B2B", v: "работа с клиниками и лабораториями" },
       ],
     },
     contact: {
       title: "Контакты",
-      subtitle: "Напишите нам — подскажем протокол, просчитаем стоимость и сроки.",
-      formTitle: "Запрос / просчёт",
-      name: "Имя",
-      clinic: "Клиника/Лаборатория",
-      phone: "Телефон",
-      email: "Email",
-      message: "Описание кейса",
-      attach: "Прикрепить файлы (STL/фото)",
-      consent: "Соглашаюсь с обработкой персональных данных",
-      send: "Отправить",
-      sent: "Спасибо! Запрос отправлен.",
-      map: "Мы на карте",
-      mapOffline: "Карта недоступна офлайн. Адрес:",
+      subtitle: "Напишите или позвоните. Обычно это полезнее, чем в десятый раз гадать в переписке, что именно нужно по кейсу.",
+      map: "Google Maps",
+      mapOffline: "Карта недоступна офлайн. Открыть профиль:",
       openMap: "Открыть в Google Maps",
+      blockTitle: "Каналы связи",
     },
-    footer: {
-      rights: "© Avtor Lab. Все права защищены.",
-      policy: "Политика конфиденциальности",
-      terms: "Условия",
-    },
-    cta: {
-      title: "Готовы начать?",
-      subtitle: "Отправьте запрос — и мы свяжемся с вами.",
-      button: "Отправить запрос",
-    },
+    footer: { rights: "© Avtorlab. Все права защищены." },
+    cta: { title: "Нужен расчёт или консультация?", subtitle: "Отправьте кейс — лаборатория вернётся с ответом.", button: "Написать" },
   },
-
-  en: {
-    brand: "Avtor Lab",
+  pl: {
+    brand: "Avtorlab",
     topbar: {
-      tagline: "Dental laboratory in Dnipro",
-      call: "Call",
-      email: "Email",
+      tagline: "Laboratorium dentystyczne • protokół cyfrowy • Dniepr",
+      call: "Zadzwoń",
+      email: "Napisz",
     },
-    nav: {
-      services: "Services",
-      partners: "For partners",
-      education: "Education",
-      calculator: "Calculator",
-      faq: "FAQ",
-      about: "About",
-      blog: "Blog",
-      contact: "Contact",
-    },
+    nav: { services: "Usługi", keywords: "Zakres", process: "Proces", faq: "FAQ", about: "O nas", contact: "Kontakt" },
     hero: {
-      title: "Avtorlab dental laboratory",
+      title: "Laboratorium dentystyczne Avtorlab",
       subtitle:
-        "Avtorlab is a dental laboratory in Dnipro. We deliver aesthetic and functional restorations from veneers to full-arch cases for clinics and labs across Ukraine.",
-      ctaPrimary: "Send request",
-      ctaSecondary: "View services",
-      badges: ["Reliable timelines", "Quality control", "Doctor support", "100% digital protocols"],
-      qcLine: "QC • Digital workflow",
+        "Avtorlab to laboratorium dentystyczne w Dnieprze dla klinik i lekarzy, którzy potrzebują koron cyrkonowych, koron ceramicznych, licówek, nakładów ceramicznych, belek tytanowych i precyzyjnego frezowania cyfrowego.",
+      ctaPrimary: "Wyślij zapytanie",
+      ctaSecondary: "Zobacz zakres",
+      badges: ["Dniepr", "Protokół cyfrowy", "Stabilne terminy", "Kontrola jakości"],
+      qcLine: "Kontrola jakości na każdym etapie laboratoryjnym",
+      workflowTitle: "Co dostaje klinika",
+      workflowItems: ["Planowanie przypadku i uzgodnienie konstrukcji", "Projekt cyfrowy i frezowanie", "Kontrola dopasowania, kontaktów i estetyki", "Wsparcie lekarza i jasna komunikacja"],
+      contactTitle: "Szybki kontakt",
     },
-    workflow: {
-      title: "Workflow",
-      items: ["Scan / impressions", "Design / approval", "Milling / QC", "Delivery / support"],
-    },
-    contactBlockTitle: "Contact",
     services: {
-      title: "Services",
-      subtitle: "Digital and classic workflows.",
+      title: "Główne prace laboratorium",
+      subtitle:
+        "Na stronie pokazujemy dokładnie te usługi, według których laboratorium powinno być znajdowane: korony, licówki, nakłady, belki tytanowe, cyrkon i konstrukcje cyfrowe.",
+      bannerAlt: "Laboratorium dentystyczne Avtorlab — prace i frezowanie",
+      galleryAlt: "Przykład pracy protetycznej Avtorlab",
       items: [
-        { title: "Veneers & onlays", desc: "Natural anatomy, color and translucency control.", img: "" },
-        { title: "Zirconia crowns", desc: "Strength, accurate fit, stable occlusion.", img: "" },
-        { title: "Full-arch restorations", desc: "Rehabilitations and implant protocols.", img: "" },
-        { title: "Titanium bars", desc: "Custom structures, precise milling, passive fit control.", img: "" },
-        { title: "Occlusal splints", desc: "Protection, stabilization, comfort.", img: "" },
-        { title: "Milling center services", desc: "STL/Exocad milling: zirconia, PMMA, titanium (per spec).", img: "" },
+        { title: "Korony cyrkonowe", desc: "Prace dla strefy bocznej i przedniej z precyzyjnym dopasowaniem i kontrolą okluzji." },
+        { title: "Korony ceramiczne", desc: "Rozwiązania estetyczne tam, gdzie liczy się kolor, przezierność i anatomia." },
+        { title: "Licówki cyrkonowe i ceramiczne", desc: "Mikroprotetyka dla przypadków estetycznych z kontrolowanym procesem cyfrowym." },
+        { title: "Nakłady ceramiczne", desc: "Funkcjonalne i estetyczne rekonstrukcje z oszczędnym podejściem do tkanek zęba." },
+        { title: "Belki tytanowe", desc: "Indywidualne frezowane konstrukcje do prac implantologicznych i pełnych łuków." },
+        { title: "Korony frezowane i prace z cyrkonu", desc: "Cyfrowe frezowanie konstrukcji z kontrolowaną geometrią i powtarzalną jakością." },
       ],
     },
-    partners: {
-      title: "For partners",
-      subtitle: "Transparent terms, communication, quality control.",
-      bullets: [
-        "Personal manager and fast feedback",
-        "Stable timelines and stage tracking",
-        "Technical recommendations and doctor support",
-        "Files/scans: Exocad, 3Shape, STL",
+    keywords: {
+      title: "Zakres usług i kluczowe frazy",
+      subtitle:
+        "Niżej znajdują się realne kierunki pracy laboratorium. Zachowaliśmy też rosyjskie odpowiedniki, bo właśnie tak część użytkowników wpisuje zapytania.",
+      searchLabel: "Fraza wyszukiwania",
+      items: [
+        { title: "Laboratorium dentystyczne", search: "Зуботехническая лаборатория", desc: "Laboratorium w Dnieprze dla prac cyfrowych i klasycznych." },
+        { title: "Technik dentystyczny", search: "Зубной техник", desc: "Partner techniczny dla lekarzy i klinik stomatologicznych." },
+        { title: "Korony cyrkonowe", search: "Циркониевые коронки", desc: "Korony z cyrkonu dla wytrzymałości, dokładnego dopasowania i stabilnej funkcji." },
+        { title: "Licówki cyrkonowe", search: "Циркониевые виниры", desc: "Estetyczne konstrukcje dla przypadków, gdzie liczy się i trwałość, i przewidywalny efekt." },
+        { title: "Korony ceramiczne", search: "Керамические коронки", desc: "Ceramika do strefy estetycznej i zadań, gdzie ważna jest naturalność." },
+        { title: "Licówki ceramiczne", search: "Керамические виниры", desc: "Cienkie rekonstrukcje estetyczne z pracą nad kształtem, kolorem i przeziernością." },
+        { title: "Nakłady ceramiczne", search: "Керамические накладки", desc: "Mikroprotetyka z anatomią funkcjonalną i kontrolą granic." },
+        { title: "Belki tytanowe", search: "Титановые балки", desc: "Frezowane belki i konstrukcje do prac implantologicznych." },
+        { title: "Korony frezowane", search: "Фрезерованные коронки", desc: "Cyfrowe korony z przewidywalną geometrią i powtarzalną jakością." },
+        { title: "Korona", search: "Коронка", desc: "Pojedyncze korony i złożone konstrukcje ortopedyczne pod konkretne zadanie." },
+        { title: "Cyrkon", search: "Циркон", desc: "Prace z cyrkonu dla klinik, gdzie liczy się estetyka, trwałość i stabilność." },
       ],
-      cta: "Get pricing & terms",
-      
-      qcTitle: "Quality control at every stage",
-      qcItems: ["Fit & margins", "Occlusion & contacts", "Thickness & boundaries", "Finishing"],
     },
-    education: {
-      title: "Education & support",
-      subtitle: "Protocols, case reviews, help with your digital workflow.",
-      cards: [
-        { title: "Mini sessions for doctors", desc: "Materials, prep, cementation, lab–clinic communication." },
-        { title: "Digital workflows", desc: "Scan, design, requirements, fit and occlusion checks." },
-        { title: "Complex case support", desc: "Planning, esthetic control, temporaries, prototyping." },
+    process: {
+      title: "Jak pracuje laboratorium",
+      subtitle: "Bez sztuczek: normalny proces, kontrola jakości i techniczna komunikacja wprost.",
+      blocks: [
+        { title: "Proces pracy", items: ["Skany lub wyciski, zdjęcia i wytyczne od lekarza", "Uzgodnienie materiału, projektu i terminów", "Wykonanie, kontrola i przekazanie pracy"] },
+        { title: "Dla kogo", items: ["Kliniki stomatologiczne", "Lekarze protetycy", "Laboratoria partnerskie i frezowanie B2B"] },
       ],
-      cta: "Book a consultation",
-      link: "https://t.me/avtor_lab",
-    },
-    calculator: {
-      title: "Lead time calculator",
-      subtitle: "Estimate production lead time (logistics not included).",
-      label: "Case type",
-      types: [
-        { key: "veneer", label: "Veneer/onlay", days: 5 },
-        { key: "zirconia", label: "Zirconia crown", days: 7 },
-        { key: "fullarch", label: "Full-arch", days: 14 },
-        { key: "bar", label: "Titanium bar", days: 10 },
-        { key: "splint", label: "Occlusal splint", days: 4 },
-        { key: "b2b", label: "Milling center", days: 3 },
-      ],
-      rush: "Rush (accelerated)",
-      result: "Estimated:",
-      days: "days",
     },
     faq: {
       title: "FAQ",
-      subtitle: "Common questions.",
+      subtitle: "Krótko i konkretnie — o usługach, materiałach i plikach.",
       items: [
-        { q: "Which file formats do you accept?", a: "STL, PLY (by agreement), Exocad projects. Best is STL with clean margins and occlusion." },
-        { q: "Do you deliver across Ukraine?", a: "Yes — via Nova Poshta/courier. Logistics timing is agreed separately." },
-        { q: "Can you provide try-in/prototypes?", a: "Yes — depending on the case we can do prototyping/try-ins." },
+        { q: "Czy wykonujecie korony cyrkonowe i korony ceramiczne?", a: "Tak. To jeden z głównych kierunków Avtorlab, obok licówek, nakładów, cyrkonu i prac cyfrowych." },
+        { q: "Czy można zamówić belki tytanowe i korony frezowane?", a: "Tak. Laboratorium pracuje z belkami tytanowymi, koronami frezowanymi i innymi konstrukcjami cyfrowymi według zlecenia klinicznego." },
+        { q: "Jakie pliki przyjmujecie?", a: "STL, skany, zdjęcia, opis techniczny przypadku i inne dane potrzebne do uzgodnienia konstrukcji." },
       ],
     },
     about: {
-      title: "About Avtor Lab",
-      subtitle: "We combine esthetics, precision and QC at every stage.",
+      title: "O Avtorlab",
+      subtitle: "Avtorlab to laboratorium dentystyczne w Dnieprze. Zamiast marketingowego dymu dostarczamy prace, które mają się dobrze osadzać, działać i wyglądać przekonująco.",
       stats: [
-        { k: "20+ years", v: "experience" },
-        { k: "100%", v: "digital protocols" },
-        { k: "Quality", v: "control at every stage" },
-        { k: "Milling center", v: "services & support" },
+        { k: "Dniepr", v: "lokalna obecność i profil Google Maps" },
+        { k: "Cyrkon", v: "korony, licówki i konstrukcje cyfrowe" },
+        { k: "Ceramika", v: "korony, licówki i nakłady" },
+        { k: "B2B", v: "współpraca z klinikami i laboratoriami" },
       ],
     },
-    blog: {
-      title: "Blog",
-      subtitle: "Notes about materials and workflows.",
-      posts: [
-        { title: "How to prepare STL for milling", desc: "Margins, occlusion, thickness, export and verification tips.", tag: "Digital" },
-        { title: "Zirconia: strength vs esthetics", desc: "When to use multilayer zirconia vs layering.", tag: "Materials" },
-        { title: "Full-arch: communication basics", desc: "Data, photos, bite, vertical, temporaries — to reduce remakes.", tag: "Workflow" },
+    contact: { title: "Kontakt", subtitle: "Napisz lub zadzwoń. To zwykle daje więcej niż kolejne zgadywanie w czacie, co dokładnie trzeba zrobić.", map: "Google Maps", mapOffline: "Mapa niedostępna offline. Otwórz profil:", openMap: "Otwórz w Google Maps", blockTitle: "Kanały kontaktu" },
+    footer: { rights: "© Avtorlab. Wszelkie prawa zastrzeżone." },
+    cta: { title: "Potrzebna wycena lub konsultacja?", subtitle: "Wyślij przypadek — laboratorium wróci z odpowiedzią.", button: "Napisz" },
+  },
+  en: {
+    brand: "Avtorlab",
+    topbar: { tagline: "Dental laboratory • digital workflow • Dnipro", call: "Call", email: "Write" },
+    nav: { services: "Services", keywords: "Focus", process: "Process", faq: "FAQ", about: "About", contact: "Contact" },
+    hero: {
+      title: "Avtorlab dental laboratory",
+      subtitle:
+        "Avtorlab is a dental laboratory in Dnipro for clinics and dentists who need zirconia crowns, ceramic crowns, zirconia veneers, ceramic veneers, ceramic overlays, titanium bars, and precise digital milling.",
+      ctaPrimary: "Send request",
+      ctaSecondary: "View focus areas",
+      badges: ["Dnipro", "Digital workflow", "Stable lead times", "Quality control"],
+      qcLine: "Laboratory quality control at each production stage",
+      workflowTitle: "What the clinic gets",
+      workflowItems: ["Case planning and design alignment", "Digital modeling and milling", "Fit, contact, and esthetic control", "Doctor support and direct communication"],
+      contactTitle: "Fast contact",
+    },
+    services: {
+      title: "Core laboratory work",
+      subtitle: "The page is structured around the actual services people search for: crowns, veneers, overlays, titanium bars, zircon, and digital constructions.",
+      bannerAlt: "Avtorlab dental laboratory — milling and restorative work",
+      galleryAlt: "Sample restorative work by Avtorlab",
+      items: [
+        { title: "Zirconia crowns", desc: "Work for posterior and anterior groups with precise fit and controlled occlusion." },
+        { title: "Ceramic crowns", desc: "Esthetic constructions where color, translucency, and anatomy matter." },
+        { title: "Zirconia and ceramic veneers", desc: "Micro-prosthetic work for esthetic cases with a controlled digital workflow." },
+        { title: "Ceramic overlays", desc: "Functional and esthetic restorations with a tissue-preserving approach." },
+        { title: "Titanium bars", desc: "Individual milled constructions for implant and full-arch cases." },
+        { title: "Milled crowns and zircon work", desc: "Digital milling for predictable geometry and repeatable laboratory quality." },
       ],
     },
-    contact: {
-      title: "Contact",
-      subtitle: "Send us a message — we’ll help with protocol and timing.",
-      formTitle: "Request / estimate",
-      name: "Name",
-      clinic: "Clinic/Lab",
-      phone: "Phone",
-      email: "Email",
-      message: "Case description",
-      attach: "Attach files (STL/photos)",
-      consent: "I agree to personal data processing",
-      send: "Send",
-      sent: "Thanks! Your request has been sent.",
-      map: "Our location",
-      mapOffline: "Map is unavailable offline. Address:",
-      openMap: "Open in Google Maps",
+    keywords: {
+      title: "Service focus and search terms",
+      subtitle: "These are the real service areas of the laboratory. Russian search phrases are kept on the page as common query equivalents for multilingual demand.",
+      searchLabel: "Search term",
+      items: [
+        { title: "Dental laboratory", search: "Зуботехническая лаборатория", desc: "Dnipro laboratory for digital and classic restorative work." },
+        { title: "Dental technician", search: "Зубной техник", desc: "Technical partner for dentists, prosthodontists, and clinics." },
+        { title: "Zirconia crowns", search: "Циркониевые коронки", desc: "Zircon work for strength, fit, and stable function." },
+        { title: "Zirconia veneers", search: "Циркониевые виниры", desc: "Esthetic constructions for cases where strength and controlled output both matter." },
+        { title: "Ceramic crowns", search: "Керамические коронки", desc: "Ceramic restorations for esthetic-zone and natural-looking work." },
+        { title: "Ceramic veneers", search: "Керамические виниры", desc: "Thin esthetic restorations with attention to shape, color, and translucency." },
+        { title: "Ceramic overlays", search: "Керамические накладки", desc: "Micro-prosthetic restorations with functional anatomy and edge control." },
+        { title: "Titanium bars", search: "Титановые балки", desc: "Milled bars and constructions for implant cases." },
+        { title: "Milled crowns", search: "Фрезерованные коронки", desc: "Digital crowns with predictable geometry and repeatable quality." },
+        { title: "Crown", search: "Коронка", desc: "Single crowns and more complex restorative constructions for the required indication." },
+        { title: "Zircon", search: "Циркон", desc: "Zircon-based work where esthetics, strength, and stability all matter." },
+      ],
     },
-    footer: {
-      rights: "© Avtor Lab. All rights reserved.",
-      policy: "Privacy policy",
-      terms: "Terms",
+    process: {
+      title: "How the laboratory works",
+      subtitle: "No smoke and mirrors: a direct workflow, quality control, and technical communication that respects the case.",
+      blocks: [
+        { title: "Workflow", items: ["Scans or impressions, photos, and doctor instructions", "Material, design, and timing alignment", "Production, control, and handoff"] },
+        { title: "Who it serves", items: ["Dental clinics", "Individual prosthodontists", "Partner laboratories and B2B milling"] },
+      ],
     },
-    cta: {
-      title: "Ready to start?",
-      subtitle: "Send a request — we’ll get back to you.",
-      button: "Send request",
+    faq: {
+      title: "FAQ",
+      subtitle: "Brief and practical — on services, materials, and files.",
+      items: [
+        { q: "Do you produce zirconia crowns and ceramic crowns?", a: "Yes. That is one of the main service lines at Avtorlab, together with veneers, overlays, zircon work, and digital constructions." },
+        { q: "Can we order titanium bars and milled crowns?", a: "Yes. The laboratory works with titanium bars, milled crowns, and other digital constructions based on clinical requirements." },
+        { q: "Which files do you accept?", a: "STL, scans, photos, technical case notes, and the data needed to align the construction." },
+      ],
     },
+    about: {
+      title: "About Avtorlab",
+      subtitle: "Avtorlab is a dental laboratory in Dnipro. No inflated promises — just work that is supposed to seat properly, function, and look convincing.",
+      stats: [
+        { k: "Dnipro", v: "local presence and Google Maps profile" },
+        { k: "Zircon", v: "crowns, veneers, and digital constructions" },
+        { k: "Ceramics", v: "crowns, veneers, and overlays" },
+        { k: "B2B", v: "work with clinics and laboratories" },
+      ],
+    },
+    contact: { title: "Contact", subtitle: "Write or call. It is usually more productive than guessing in chat what the case really needs.", map: "Google Maps", mapOffline: "Map unavailable offline. Open profile:", openMap: "Open in Google Maps", blockTitle: "Contact channels" },
+    footer: { rights: "© Avtorlab. All rights reserved." },
+    cta: { title: "Need an estimate or consultation?", subtitle: "Send the case — the laboratory will respond.", button: "Write" },
   },
 };
 
-/** ---- UI ---- */
-function Section({ id, eyebrow, title, subtitle, children }) {
+function Section({ id, title, subtitle, children }) {
   return (
     <section id={id} className="py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="mb-10">
-          {eyebrow ? (
-            <div className="text-xs uppercase tracking-wider text-neutral-500">{eyebrow}</div>
-          ) : null}
           <h2 className={`mt-2 text-3xl md:text-4xl font-bold ${ON_DARK_TITLE}`}>{title}</h2>
-          {subtitle ? (
-            <p className={`mt-3 max-w-3xl text-base md:text-lg ${ON_DARK_MUTED}`}>{subtitle}</p>
-          ) : null}
+          {subtitle ? <p className={`mt-3 max-w-4xl text-base md:text-lg ${ON_DARK_MUTED}`}>{subtitle}</p> : null}
         </div>
         {children}
       </div>
@@ -665,7 +466,7 @@ function Pill({ children }) {
   );
 }
 
-function Topbar({ t, lang, setLang }) {
+function Topbar({ t, currentLang }) {
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -674,25 +475,15 @@ function Topbar({ t, lang, setLang }) {
   return (
     <div className={`sticky top-0 z-50 border-b ${PAGE_BORDER} bg-black`}>
       <div className="mx-auto max-w-6xl px-4">
-        <div className="flex items-center justify-between py-3">
-          <div className="flex flex-col leading-tight">
-  <div className="text-base md:text-lg font-bold text-white tracking-wide">
-    {t.brand}
-  </div>
-  <div className="text-xs md:text-sm text-neutral-400">
-    {t.topbar.tagline}
-  </div>
-</div>
-
+        <div className="flex items-center justify-between py-3 gap-3">
+          <div className="flex flex-col leading-tight min-w-0">
+            <div className="text-base md:text-lg font-bold text-white tracking-wide">{t.brand}</div>
+            <div className="text-xs md:text-sm text-neutral-400">{t.topbar.tagline}</div>
+          </div>
 
           <div className="hidden md:flex items-center gap-4 text-sm">
             {Object.entries(t.nav).map(([key, label]) => (
-              <button
-                key={key}
-                className="text-neutral-300 hover:text-white"
-                onClick={() => scrollTo(key)}
-                type="button"
-              >
+              <button key={key} className="text-neutral-300 hover:text-white" onClick={() => scrollTo(key)} type="button">
                 {label}
               </button>
             ))}
@@ -702,37 +493,30 @@ function Topbar({ t, lang, setLang }) {
             <div className="hidden shrink-0 sm:flex items-center gap-2 rounded-xl border border-neutral-800 pl-3 pr-2 py-1">
               <Globe className="h-4 w-4 text-neutral-400" />
               {LANGS.map((l) => (
-                <button
+                <a
                   key={l.key}
-                  onClick={() => setLang(l.key)}
-                  type="button"
+                  href={l.href}
                   className={[
                     "rounded-lg px-2 py-1 text-xs",
-                    lang === l.key
-                      ? "bg-white text-black"
-                      : "text-neutral-300 hover:bg-neutral-900 hover:text-white",
+                    currentLang === l.key ? "bg-white text-black" : "text-neutral-300 hover:bg-neutral-900 hover:text-white",
                   ].join(" ")}
                 >
                   {l.label}
-                </button>
+                </a>
               ))}
             </div>
 
             <Button
-  variant="outline"
-  className="hidden sm:inline-flex gap-2 border-neutral-700 text-black hover:bg-neutral-900"
-  onClick={() => window.open(TG_LAB, "_blank")}
-  type="button"
->
-  <Mail className="h-4 w-4" />
-  {t.topbar.email}
-</Button>
-
-            <Button
-              className="gap-2 bg-white text-black hover:bg-neutral-200"
-              onClick={() => (window.location.href = `tel:${PHONE_TEL}`)}
+              variant="outline"
+              className="hidden sm:inline-flex gap-2 border-neutral-700 text-black hover:bg-neutral-900"
+              onClick={() => window.open(telegramUrl, "_blank")}
               type="button"
             >
+              <Mail className="h-4 w-4" />
+              {t.topbar.email}
+            </Button>
+
+            <Button className="gap-2 bg-white text-black hover:bg-neutral-200" onClick={() => (window.location.href = `tel:${phoneTel}`)} type="button">
               <Phone className="h-4 w-4" />
               {t.topbar.call}
             </Button>
@@ -754,21 +538,11 @@ function Hero({ t }) {
       <div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <div>
-            <motion.h1
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-3xl md:text-5xl font-semibold leading-tight text-white"
-            >
+            <motion.h1 initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-3xl md:text-5xl font-semibold leading-tight text-white">
               {t.hero.title}
             </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.08 }}
-             className={`mt-5 text-base md:text-lg ${ON_DARK_TEXT}`}
-            >
+            <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08 }} className={`mt-5 text-base md:text-lg ${ON_DARK_TEXT}`}>
               {t.hero.subtitle}
             </motion.p>
 
@@ -779,20 +553,10 @@ function Hero({ t }) {
             </div>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <Button
-                className="gap-2 bg-white text-black hover:bg-neutral-200"
-                onClick={() => scrollTo("contact")}
-                type="button"
-              >
+              <Button className="gap-2 bg-white text-black hover:bg-neutral-200" onClick={() => scrollTo("contact")} type="button">
                 {t.hero.ctaPrimary} <ArrowRight className="h-4 w-4" />
               </Button>
-
-              <Button
-                variant="outline"
-                className="border-neutral-700 text-black bg-white hover:bg-neutral-200"
-                onClick={() => scrollTo("services")}
-                type="button"
-              >
+              <Button variant="outline" className="border-neutral-700 text-black bg-white hover:bg-neutral-200" onClick={() => scrollTo("keywords")} type="button">
                 {t.hero.ctaSecondary}
               </Button>
             </div>
@@ -803,40 +567,23 @@ function Hero({ t }) {
             </div>
           </div>
 
-          {/* Clean panels — no gradients, no blur spots */}
           <div className="grid gap-4">
             <Card className={PANEL}>
-              <CardHeader>
-                <CardTitle className="text-base">{t.workflow.title}</CardTitle>
-              </CardHeader>
+              <CardHeader><CardTitle className="text-base">{t.hero.workflowTitle}</CardTitle></CardHeader>
               <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>
                 <ul className="space-y-2">
-                  {t.workflow.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2">
-                      <Check className="h-4 w-4" /> {item}
-                    </li>
+                  {t.hero.workflowItems.map((item) => (
+                    <li key={item} className="flex items-center gap-2"><Check className="h-4 w-4" /> {item}</li>
                   ))}
                 </ul>
               </CardContent>
             </Card>
-
             <Card className={PANEL}>
-              <CardHeader>
-                <CardTitle className="text-base">{t.contactBlockTitle}</CardTitle>
-              </CardHeader>
+              <CardHeader><CardTitle className="text-base">{t.hero.contactTitle}</CardTitle></CardHeader>
               <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
-                  <span>{PHONE_DISPLAY}</span>
-                </div>
-                <div className="mt-2 flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  <span>{EMAIL}</span>
-                </div>
-                <div className="mt-2 flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>Dnipro, Ukraine</span>
-                </div>
+                <div className="flex items-center gap-2"><Phone className="h-4 w-4" /><span>{phoneDisplay}</span></div>
+                <div className="mt-2 flex items-center gap-2"><Mail className="h-4 w-4" /><span>{email}</span></div>
+                <div className="mt-2 flex items-center gap-2"><MapPin className="h-4 w-4" /><span>Dnipro, Ukraine</span></div>
               </CardContent>
             </Card>
           </div>
@@ -847,90 +594,86 @@ function Hero({ t }) {
 }
 
 function Services({ t }) {
-  const gallery = useMemo(
-    () => [
-      "/images/services-teeth-2.jpg",
-      "/images/services-teeth-3.jpg",
-      "/images/services-teeth-4.jpg",
-      "/images/services-teeth-5.jpg",
-      "/images/services-teeth-6.jpg",
-      "/images/services-teeth-7.jpg",
-      "/images/services-teeth-8.jpg",
-      "/images/services-teeth-9.jpg",
-      "/images/services-teeth-10.jpg",
-      "/images/services-teeth-11.jpg",
-      "/images/services-teeth-12.jpg",
-      "/images/services-teeth-13.jpg",
-    ],
-    []
-  );
+  const gallery = useMemo(() => [
+    "/images/services-teeth-2.jpg",
+    "/images/services-teeth-3.jpg",
+    "/images/services-teeth-4.jpg",
+    "/images/services-teeth-5.jpg",
+    "/images/services-teeth-6.jpg",
+    "/images/services-teeth-7.jpg",
+    "/images/services-teeth-8.jpg",
+    "/images/services-teeth-9.jpg",
+    "/images/services-teeth-10.jpg",
+    "/images/services-teeth-11.jpg",
+    "/images/services-teeth-12.jpg",
+    "/images/services-teeth-13.jpg",
+  ], []);
+
   return (
     <Section id="services" title={t.services.title} subtitle={t.services.subtitle}>
-      
-{/* Services category image (banner) */}
-<motion.div
-  initial={{ opacity: 0, y: 12 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true, amount: 0.3 }}
-  transition={{ duration: 0.5, ease: "easeOut" }}
-  className="mt-6 mb-4"
->
-  <a href={SOCIALS.find((s) => s.label === "Facebook")?.href} target="_blank" rel="noopener noreferrer" className="block">
-    <div className="relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 aspect-[16/6]">
-    <Image
-      src="/images/services-teeth.jpg"
-      alt="Преміальне фрезерування та реставрації"
-      fill
-      className="object-cover"
-      sizes="(max-width: 768px) 100vw, 1100px"
-      priority={false}
-    />
-    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
-  </div>
-</a>
-</motion.div>
+      <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, ease: "easeOut" }} className="mt-6 mb-4">
+        <a href={SOCIALS.find((s) => s.label === "Facebook")?.href} target="_blank" rel="noopener noreferrer" className="block">
+          <div className="relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 aspect-[16/6]">
+            <Image src="/images/services-teeth.jpg" alt={t.services.bannerAlt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 1100px" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
+          </div>
+        </a>
+      </motion.div>
 
-{/* Extra service photos (grid 3 columns) */}
-<div className="mb-8">
-  <div className="mt-1 grid grid-cols-2 gap-3 md:grid-cols-3">
-    {gallery.map((src) => (
-      <div
-        key={src}
-        className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100"
-      >
-        <div className="relative aspect-[4/3]">
-          <Image
-            src={src}
-            alt="Przykładowe prace protetyczne"
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 50vw, 320px"
-          />
+      <div className="mb-8">
+        <div className="mt-1 grid grid-cols-2 gap-3 md:grid-cols-3">
+          {gallery.map((src) => (
+            <div key={src} className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100">
+              <div className="relative aspect-[4/3]">
+                <Image src={src} alt={t.services.galleryAlt} fill className="object-cover" sizes="(max-width: 768px) 50vw, 320px" />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    ))}
-  </div>
-</div>
 
-<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {t.services.items.map((it) => (
+          <Card key={it.title} className={PANEL}>
+            <CardHeader><CardTitle className="text-base">{it.title}</CardTitle></CardHeader>
+            <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>{it.desc}</CardContent>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function KeywordGrid({ t }) {
+  return (
+    <Section id="keywords" title={t.keywords.title} subtitle={t.keywords.subtitle}>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {t.keywords.items.map((it) => (
           <Card key={it.title} className={PANEL}>
             <CardHeader>
               <CardTitle className="text-base">{it.title}</CardTitle>
             </CardHeader>
+            <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>{it.desc}</CardContent>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Process({ t }) {
+  return (
+    <Section id="process" title={t.process.title} subtitle={t.process.subtitle}>
+      <div className="grid gap-6 md:grid-cols-2 md:items-start">
+        {t.process.blocks.map((block) => (
+          <Card key={block.title} className={PANEL}>
+            <CardHeader><CardTitle className="text-base">{block.title}</CardTitle></CardHeader>
             <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>
-              {/* Optional image */}
-              {it.img ? (
-                <div className="mb-3 overflow-hidden rounded-xl border border-neutral-200">
-                  <img
-                    src={it.img}
-                    alt={it.title}
-                    className="h-40 w-full object-cover grayscale"
-                    loading="lazy"
-                  />
-                </div>
-              ) : null}
-              {it.desc}
+              <ul className="space-y-3">
+                {block.items.map((item) => (
+                  <li key={item} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0" /><span>{item}</span></li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         ))}
@@ -939,157 +682,14 @@ function Services({ t }) {
   );
 }
 
-function Partners({ t }) {
-  return (
-    <Section id="partners" title={t.partners.title} subtitle={t.partners.subtitle}>
-      <div className="grid gap-6 md:grid-cols-2 md:items-start">
-        <Card className={PANEL}>
-          <CardHeader>
-            <CardTitle className="text-base">{t.partners.title}</CardTitle>
-          </CardHeader>
-          <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>
-            <ul className="space-y-3">
-              {t.partners.bullets.map((b) => (
-                <li key={b} className="flex gap-2">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-6">
-              <Button asChild className="gap-2 bg-black text-white hover:bg-neutral-900">
-                <a href={TG_LAB} target="_blank" rel="noopener noreferrer">
-                  {t.partners.cta} <ArrowRight className="h-4 w-4" />
-                </a>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className={PANEL}>
-          <CardHeader>
-            <CardTitle className="text-base">{t.partners.qcTitle}</CardTitle>
-          </CardHeader>
-          <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>
-            <div className="grid gap-2">
-              {t.partners.qcItems.map((x) => (
-                <div key={x} className="flex items-center gap-2">
-                  <Check className="h-4 w-4" /> {x}
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </Section>
-  );
-}
-
-function Education({ t }) {
-  return (
-    <Section id="education" title={t.education.title} subtitle={t.education.subtitle}>
-      <div className="grid gap-4 md:grid-cols-3">
-        {t.education.cards.map((c) => (
-          <Card key={c.title} className={PANEL}>
-            <CardHeader>
-              <CardTitle className="text-base">{c.title}</CardTitle>
-            </CardHeader>
-            <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>{c.desc}</CardContent>
-          </Card>
-        ))}
-      </div>
-
-      <div className="mt-8">
-        <a
-  href={t.education.link}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="inline-flex items-center gap-2 text-white text-lg font-semibold hover:underline"
->
-  {t.education.cta}
-  <ArrowRight className="h-4 w-4" />
-</a>
-
-      </div>
-    </Section>
-  );
-}
-
-function LeadTimeCalculator({ t }) {
-  const [type, setType] = useState(t.calculator.types[0].key);
-  const [rush, setRush] = useState(false);
-
-  const days = useMemo(() => {
-    const base = t.calculator.types.find((x) => x.key === type)?.days ?? 0;
-    return rush ? Math.max(1, Math.round(base * 0.7)) : base;
-  }, [type, rush, t]);
-
-  return (
-    <Section id="calculator" title={t.calculator.title} subtitle={t.calculator.subtitle}>
-      <Card className={PANEL}>
-        <CardContent className="p-6">
-          <div className="grid gap-6 md:grid-cols-3 md:items-end">
-            <div className="md:col-span-2">
-              <div className="text-sm font-semibold flex items-center gap-2 text-black">
-                <Calculator className="h-4 w-4" /> {t.calculator.label}
-              </div>
-
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {t.calculator.types.map((tt) => (
-                  <button
-                    key={tt.key}
-                    type="button"
-                    onClick={() => setType(tt.key)}
-                    className={[
-                      "rounded-xl border px-4 py-3 text-left text-sm",
-                      type === tt.key
-                        ? "border-black bg-black text-white"
-                        : "border-neutral-200 bg-white hover:bg-neutral-50 text-black",
-                    ].join(" ")}
-                  >
-                    <div className="font-medium">{tt.label}</div>
-                    <div className={["text-xs mt-1", type === tt.key ? "text-white/80" : "text-neutral-500"].join(" ")}>
-                      {tt.days} {t.calculator.days}
-                    </div>
-                  </button>
-                ))}
-              </div>
-
-              <label className="mt-4 flex items-center gap-2 text-sm text-neutral-700">
-                <input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} />
-                {t.calculator.rush}
-              </label>
-            </div>
-
-            <div className="rounded-2xl border border-neutral-200 bg-white p-5">
-              <div className="text-xs text-neutral-500">{t.calculator.result}</div>
-              <div className="mt-2 text-3xl font-semibold text-black">
-                {days} <span className="text-base font-medium">{t.calculator.days}</span>
-              </div>
-              <div className="mt-3 text-sm text-neutral-600">* logistics not included</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </Section>
-  );
-}
-
 function FAQ({ t }) {
-  const [open, setOpen] = useState(0);
-
   return (
     <Section id="faq" title={t.faq.title} subtitle={t.faq.subtitle}>
       <div className="grid gap-3">
-        {t.faq.items.map((it, idx) => (
+        {t.faq.items.map((it) => (
           <Card key={it.q} className={PANEL}>
-            <CardHeader className="cursor-pointer" onClick={() => setOpen(idx === open ? -1 : idx)}>
-              <CardTitle className="text-base">{it.q}</CardTitle>
-            </CardHeader>
-            {open === idx ? (
-              <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>{it.a}</CardContent>
-            ) : null}
+            <CardHeader><CardTitle className="text-base">{it.q}</CardTitle></CardHeader>
+            <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>{it.a}</CardContent>
           </Card>
         ))}
       </div>
@@ -1112,103 +712,40 @@ function About({ t }) {
   );
 }
 
-function Blog({ t }) {
-  return (
-    <Section id="blog" title={t.blog.title} subtitle={t.blog.subtitle}>
-      <div className="grid gap-4 md:grid-cols-3">
-        {t.blog.posts.map((p) => (
-          <Card key={p.title} className={PANEL}>
-            <CardHeader>
-              <div className="text-xs uppercase tracking-wider text-neutral-500">{p.tag}</div>
-              <CardTitle className="text-base">{p.title}</CardTitle>
-            </CardHeader>
-            <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>{p.desc}</CardContent>
-          </Card>
-        ))}
-      </div>
-    </Section>
-  );
-}
-
 function Contact({ t }) {
-  const [online, setOnline] = useState(true);
-
-  useEffect(() => {
-    const update = () => setOnline(navigator.onLine);
-    update();
-    window.addEventListener("online", update);
-    window.addEventListener("offline", update);
-    return () => {
-      window.removeEventListener("online", update);
-      window.removeEventListener("offline", update);
-    };
-  }, []);
-
-  const mapUrl = GOOGLE_MAPS_PROFILE;
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent("Dnipro, Ukraine")}&output=embed`;
-
   return (
     <Section id="contact" title={t.contact.title} subtitle={t.contact.subtitle}>
-      {/* Убираем форму (красная зона на скрине) и растягиваем карту + direct на всю ширину */}
       <div className="grid gap-6 md:grid-cols-2">
         <Card className={PANEL}>
-          <CardHeader>
-            <CardTitle className="text-base">{t.contact.map}</CardTitle>
-          </CardHeader>
+          <CardHeader><CardTitle className="text-base">{t.contact.map}</CardTitle></CardHeader>
           <CardContent className="p-0">
             <div className="rounded-b-2xl overflow-hidden">
-              {online ? (
-                <iframe
-                  title="map"
-                  className="w-full h-96"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  src={mapEmbedUrl}
-                />
-              ) : (
-                <div className="p-4 text-sm text-neutral-700">
-                  {t.contact.mapOffline} <b>Dnipro, Ukraine</b>
-                  <div className="mt-3">
-                    <Button asChild className="bg-black text-white hover:bg-neutral-900">
-                      <a href={mapUrl} target="_blank" rel="noopener noreferrer">
-                        {t.contact.openMap}
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              )}
+              <iframe title="map" className="w-full h-96" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src={mapEmbedUrl} />
             </div>
           </CardContent>
         </Card>
-
         <Card className={PANEL}>
-          <CardHeader>
-            <CardTitle className="text-base">{t.contactBlockTitle}</CardTitle>
-          </CardHeader>
+          <CardHeader><CardTitle className="text-base">{t.contact.blockTitle}</CardTitle></CardHeader>
           <CardContent className={`text-sm ${ON_LIGHT_TEXT}`}>
-            <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4" /> {PHONE_DISPLAY}
-            </div>
-            <div className="mt-2 flex items-center gap-2">
-              <Mail className="h-4 w-4" /> {EMAIL}
-            </div>
-
+            <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> {phoneDisplay}</div>
+            <div className="mt-2 flex items-center gap-2"><Mail className="h-4 w-4" /> {email}</div>
+            <div className="mt-2 flex items-center gap-2"><MapPin className="h-4 w-4" /> Dnipro, Ukraine</div>
             <div className="mt-4 flex flex-wrap gap-2">
               {SOCIALS.map((s) => {
                 const Icon = s.icon;
                 return (
-                  <Button
-                    key={s.label}
-                    variant="outline"
-                    className="gap-2 border-neutral-300 text-black hover:bg-neutral-100"
-                    type="button"
-                    onClick={() => window.open(s.href, "_blank")}
-                  >
+                  <Button key={s.label} variant="outline" className="gap-2 border-neutral-300 text-black hover:bg-neutral-100" type="button" onClick={() => window.open(s.href, "_blank")}>
                     <Icon className="h-4 w-4" /> {s.label}
                   </Button>
                 );
               })}
             </div>
+            <div className="mt-4">
+              <Button asChild className="bg-black text-white hover:bg-neutral-900">
+                <a href={googleMapsProfile} target="_blank" rel="noopener noreferrer">{t.contact.openMap}</a>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -1216,28 +753,17 @@ function Contact({ t }) {
   );
 }
 
-function Footer({ t, lang }) {
+function Footer({ t }) {
   return (
     <footer className={`border-t ${PAGE_BORDER} py-10 bg-black`}>
       <div className="mx-auto max-w-6xl px-4">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="text-sm text-neutral-400">{t.footer.rights}</div>
-          <div className="flex gap-4 text-sm">
-            <a href={`/privacy${lang === "uk" ? "" : `#${lang}`}`} className="text-neutral-300 hover:text-white">{t.footer.policy}</a>
-            <a href={`/terms${lang === "uk" ? "" : `#${lang}`}`} className="text-neutral-300 hover:text-white">{t.footer.terms}</a>
-          </div>
-        </div>
+        <div className="text-sm text-neutral-400">{t.footer.rights}</div>
       </div>
     </footer>
   );
 }
 
 function StickyCTA({ t }) {
-  const scrollTo = () => {
-    const el = document.getElementById("contact");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   return (
     <div className="fixed bottom-4 left-0 right-0 z-40">
       <div className="mx-auto max-w-6xl px-4">
@@ -1246,8 +772,8 @@ function StickyCTA({ t }) {
             <div className="text-sm font-semibold text-white">{t.cta.title}</div>
             <div className="text-xs text-neutral-400">{t.cta.subtitle}</div>
           </div>
-          <Button className="shrink-0 gap-2 bg-white text-black hover:bg-neutral-200" onClick={scrollTo} type="button">
-            {t.cta.button} <ArrowRight className="h-4 w-4" />
+          <Button asChild className="shrink-0 gap-2 bg-white text-black hover:bg-neutral-200">
+            <a href={telegramUrl} target="_blank" rel="noopener noreferrer">{t.cta.button} <ArrowRight className="h-4 w-4" /></a>
           </Button>
         </div>
       </div>
@@ -1255,47 +781,21 @@ function StickyCTA({ t }) {
   );
 }
 
-/** ---- MAIN ---- */
-export default function AvtorLabSite() {
-  const [lang, setLang] = useState("uk");
-  const t = COPY[lang] || COPY.uk;
-
-  // Hash routing: allows /#pl to open Polish version.
-  useEffect(() => {
-    const applyFromHash = () => {
-      const h = (window.location.hash || "").replace("#", "").trim();
-      if (h === "pl" || h === "en" || h === "uk" || h === "ru") setLang(h);
-    };
-    applyFromHash();
-    window.addEventListener("hashchange", applyFromHash);
-    return () => window.removeEventListener("hashchange", applyFromHash);
-  }, []);
-
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    if (lang === "uk") {
-      url.hash = "";
-    } else {
-      url.hash = lang;
-    }
-    window.history.replaceState(null, "", url.toString());
-  }, [lang]);
-
+export default function AvtorLabSite({ initialLang = "uk" }) {
+  const t = COPY[initialLang] || COPY.uk;
   return (
     <div className={`min-h-screen ${PAGE_BG}`}>
-      <Topbar t={t} lang={lang} setLang={setLang} />
+      <Topbar t={t} currentLang={initialLang} />
       <main>
         <Hero t={t} />
         <Services t={t} />
-        <Partners t={t} />
-        <Education t={t} />
-        <LeadTimeCalculator t={t} />
+        <KeywordGrid t={t} />
+        <Process t={t} />
         <FAQ t={t} />
         <About t={t} />
-        <Blog t={t} />
         <Contact t={t} />
       </main>
-      <Footer t={t} lang={lang} />
+      <Footer t={t} />
       <StickyCTA t={t} />
     </div>
   );

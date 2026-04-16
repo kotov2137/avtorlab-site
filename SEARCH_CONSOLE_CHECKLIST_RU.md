@@ -1,71 +1,59 @@
-# Avtorlab: что делать после загрузки на GitHub и деплоя
+Avtorlab — что сделано в этой версии
 
-## 1. Перед подключением Search Console
-- Убедись, что сайт открывается по основному домену.
-- Проверь, что главная, /privacy и /terms отдают 200 OK.
-- Проверь, что robots.txt открывается по адресу /robots.txt.
-- Проверь, что sitemap.xml открывается по адресу /sitemap.xml.
+1. Сайт переведён с hash-переключения языков на отдельные SEO-URL:
+- /
+- /ru
+- /pl
+- /en
 
-## 2. Что уже подготовлено в этом архиве
-- app/robots.ts — генерирует robots.txt
-- app/sitemap.ts — генерирует sitemap.xml
-- app/layout.tsx — metadata, robots meta, Open Graph, JSON-LD, Google verification через переменную окружения
-- app/manifest.ts — web app manifest
-- .env.example — пример переменных окружения
+2. На странице добавлены видимые блоки с ключевыми направлениями и точными формулировками запросов:
+- Зуботехническая лаборатория
+- Зубной техник
+- Циркониевые коронки
+- Циркониевые виниры
+- Керамические коронки
+- Керамические виниры
+- Керамические накладки
+- Титановые балки
+- Фрезерованные коронки
+- Коронка
+- Циркон
 
-## 3. Что нужно сделать в Vercel
-Добавь Environment Variables:
-- NEXT_PUBLIC_SITE_URL = https://avtorlab.com.ua
-- GOOGLE_SITE_VERIFICATION = токен из Search Console после выбора метода HTML meta tag
+3. Обновлены:
+- title
+- description
+- canonical
+- language alternates
+- sitemap.xml
+- robots.txt
+- JSON-LD LocalBusiness / OfferCatalog
 
-После этого сделай redeploy.
+4. Убраны пустые /privacy и /terms.
 
-## 4. Что делать в Google Search Console
-1. Добавь property домена или URL-prefix.
-2. Подтверди сайт.
-3. Если выбираешь HTML meta tag, скопируй токен в GOOGLE_SITE_VERIFICATION.
-4. После нового деплоя открой главную страницу и проверь исходный код: meta verification должен быть виден.
-5. В Search Console открой Sitemaps и отправь sitemap.xml.
-6. В URL Inspection проверь:
-   - /
-   - /privacy
-   - /terms
-7. Нажми Request indexing только для этих URL после деплоя.
+Что сделать после загрузки на GitHub и деплоя
 
-## 5. Что смотреть в Search Console
-### Sitemaps
-- статус Success
-- нет ошибок fetch/parse
+1. Открыть:
+- https://avtorlab.com.ua/
+- https://avtorlab.com.ua/ru
+- https://avtorlab.com.ua/pl
+- https://avtorlab.com.ua/en
+- https://avtorlab.com.ua/robots.txt
+- https://avtorlab.com.ua/sitemap.xml
 
-### URL Inspection
-- URL can be indexed
-- Page fetch successful
-- Indexing allowed
-- не должно быть noindex или blocked by robots.txt
+2. Проверить, что sitemap содержит 4 URL.
 
-### Page indexing
-Смотри, нет ли:
-- Crawled - currently not indexed
-- Discovered - currently not indexed
-- Blocked by robots.txt
-- Duplicate, Google chose different canonical
-- Soft 404
+3. В Search Console:
+- открыть Файлы Sitemap
+- отправить sitemap.xml
+- открыть Проверка URL
+- поочерёдно проверить:
+  - /
+  - /ru
+  - /pl
+  - /en
+- сделать live test
+- запросить индексацию
 
-### Performance
-Отслеживай запросы:
-- зуботехническая лаборатория днепр
-- зуботехническая лаборатория авторлаб
-- avtorlab
-- avtor lab
-- dental laboratory dnipro
+4. В Google Business Profile выровнять описание услуг с сайтом и использовать те же названия ключевых услуг.
 
-## 6. Важное ограничение текущей версии
-Сайт сейчас многоязычный через переключатель на одной странице. Для полноценного hreflang лучше делать отдельные URL под языки: /uk, /ru, /pl, /en.
-Это следующий этап. Без этого сайт всё равно индексируется, но международная SEO-структура не максимальная.
-
-## 7. Что не делать
-- не добавлять keyword stuffing
-- не закрывать сайт robots.txt
-- не ставить noindex на важные страницы
-- не менять основной домен хаотично с www на без www и обратно
-- не дублировать один и тот же контент на куче URL
+5. Следить в Search Console за запросами и показами. Не ждать моментального топа. Сначала важны индекс, корректные URL и устойчивые показы.
